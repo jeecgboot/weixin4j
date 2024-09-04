@@ -1,6 +1,6 @@
 package com.jeecg.weibo.api;
 
-import org.apache.commons.lang.StringUtils;
+import com.alipay.api.internal.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

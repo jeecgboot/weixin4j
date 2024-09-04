@@ -1,11 +1,9 @@
 package org.jeewx.api.wxbase.wxmedia;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.internal.util.StringUtils;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
@@ -13,27 +11,17 @@ import org.jeewx.api.core.req.model.DownloadMedia;
 import org.jeewx.api.core.req.model.UploadMedia;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.jeewx.api.core.util.WeiXinReqUtil;
-import org.jeewx.api.wxbase.wxmedia.model.WxArticlesRequest;
-import org.jeewx.api.wxbase.wxmedia.model.WxArticlesRequestByMaterial;
-import org.jeewx.api.wxbase.wxmedia.model.WxArticlesRespponseByMaterial;
-import org.jeewx.api.wxbase.wxmedia.model.WxCountResponse;
-import org.jeewx.api.wxbase.wxmedia.model.WxDescriptionRequest;
-import org.jeewx.api.wxbase.wxmedia.model.WxDwonload;
-import org.jeewx.api.wxbase.wxmedia.model.WxItem;
-import org.jeewx.api.wxbase.wxmedia.model.WxMediaForMaterial;
-import org.jeewx.api.wxbase.wxmedia.model.WxMediaForMaterialResponse;
-import org.jeewx.api.wxbase.wxmedia.model.WxNews;
-import org.jeewx.api.wxbase.wxmedia.model.WxNewsArticle;
-import org.jeewx.api.wxbase.wxmedia.model.WxUpdateArticle;
-import org.jeewx.api.wxbase.wxmedia.model.WxUpload;
+import org.jeewx.api.wxbase.wxmedia.model.*;
 import org.jeewx.api.wxsendmsg.JwSendMessageAPI;
 import org.jeewx.api.wxsendmsg.model.WxArticle;
 import org.jeewx.api.wxsendmsg.model.WxArticlesResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 微信--token信息
@@ -76,7 +64,7 @@ public class JwMediaAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(uploadMedia);
 		Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 		WxUpload wxMedia = null;
-		wxMedia = (WxUpload) JSONObject.toBean(result, WxUpload.class);
+		wxMedia = (WxUpload) JSONObject.toJavaObject(result, WxUpload.class);
 		return wxMedia;
 	}
 	
@@ -97,7 +85,7 @@ public class JwMediaAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(downloadMedia);
 		Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 		WxDwonload wxMedia = null;
-		wxMedia = (WxDwonload) JSONObject.toBean(result, WxDwonload.class);
+		wxMedia = (WxDwonload) JSONObject.toJavaObject(result, WxDwonload.class);
 		return wxMedia;
 	}
 	
@@ -150,10 +138,10 @@ public class JwMediaAPI {
 				}
 				WxArticlesRequest wxArticlesRequest = new WxArticlesRequest();
 				wxArticlesRequest.setArticles(wxArticles);
-				JSONObject obj = JSONObject.fromObject(wxArticlesRequest);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxArticlesRequest));
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 				//System.out.println("微信返回的结果：" + result.toString());
-				if (result.has("errcode")) {
+				if (result.containsKey("errcode")) {
 					logger.error("上传图文消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException("上传图文消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				} else {
@@ -187,7 +175,7 @@ public class JwMediaAPI {
 
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST",null);
 			//System.out.println("微信返回的结果：" + result.toString());
-			if (result.has("errcode")) {
+			if (result.containsKey("errcode")) {
 				logger.error("上传图文消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				throw new WexinReqException("上传图文消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 			} else {
@@ -218,14 +206,14 @@ public class JwMediaAPI {
 				String requestUrl = material_get_material_url.replace("ACCESS_TOKEN", accesstoken);
 				WxArticlesRequestByMaterial wxArticlesRequestByMaterial = new WxArticlesRequestByMaterial();
 				wxArticlesRequestByMaterial.setMediaId(mediaId);
-				JSONObject obj = JSONObject.fromObject(wxArticlesRequestByMaterial);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxArticlesRespponseByMaterial));
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 				//System.out.println("微信返回的结果：" + result.toString());
-				if (result.has("errcode")) {
+				if (result.containsKey("errcode")) {
 					logger.error("获得消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException("获得消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				} else {
-					wxArticlesRespponseByMaterial = (WxArticlesRespponseByMaterial)JSONObject.toBean(result,WxArticlesRespponseByMaterial.class);
+					wxArticlesRespponseByMaterial = (WxArticlesRespponseByMaterial)JSONObject.toJavaObject(result,WxArticlesRespponseByMaterial.class);
 				}
 		}
 
@@ -242,14 +230,14 @@ public class JwMediaAPI {
 	 * @throws WexinReqException
 	 */
 	public static void deleteArticlesByMaterial(String accesstoken,String mediaId) throws WexinReqException {
-			if (accesstoken != null&&StringUtils.isNotEmpty(mediaId)) {
+			if (accesstoken != null&& !StringUtils.isEmpty(mediaId)) {
 				String requestUrl = material_get_material_url.replace("ACCESS_TOKEN", accesstoken);
 				WxArticlesRequestByMaterial wxArticlesRequestByMaterial = new WxArticlesRequestByMaterial();
 				wxArticlesRequestByMaterial.setMediaId(mediaId);
-				JSONObject obj = JSONObject.fromObject(wxArticlesRequestByMaterial);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxArticlesRequestByMaterial));
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 				//System.out.println("微信返回的结果：" + result.toString());
-				if (result.has("errcode")&&result.get("errcode")!="0") {
+				if (result.containsKey("errcode")&&result.get("errcode")!="0") {
 					logger.error("删除消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException("删除消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				} 
@@ -267,10 +255,10 @@ public class JwMediaAPI {
 		if (accesstoken != null) {
 			String requestUrl = material_update_news_url.replace("ACCESS_TOKEN", accesstoken);
 			
-			JSONObject obj = JSONObject.fromObject(wxUpdateArticle);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxUpdateArticle));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			//System.out.println("微信返回的结果：" + result.toString());
-			if (result.has("errcode")&&result.get("errcode")!="0") {
+			if (result.containsKey("errcode")&&result.get("errcode")!="0") {
 				logger.error("消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				throw new WexinReqException("消息消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 			} 
@@ -295,11 +283,11 @@ public class JwMediaAPI {
 			obj.put("count", count);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			//System.out.println("微信返回的结果：" + result.toString());
-			if (result.has("errcode")&&result.get("errcode")!="0") {
+			if (result.containsKey("errcode")&&result.get("errcode")!="0") {
 				logger.error("消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				throw new WexinReqException("消息消息失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 			} else{
-				wn = (WxNews) JSONObject.toBean(result, WxNews.class);
+				wn = (WxNews) JSONObject.toJavaObject(result, WxNews.class);
 			}
 		}
 		return wn;
@@ -340,7 +328,7 @@ public class JwMediaAPI {
 			if("video"==wx.getType()){
 				WxDescriptionRequest wr = new WxDescriptionRequest();
 				wr.setDescription(wx.getWxDescription());
-				JSONObject obj = JSONObject.fromObject(wr);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wr));
 				WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			}
 			
@@ -432,9 +420,9 @@ public class JwMediaAPI {
 				String requestUrl = material_add_news_url.replace("ACCESS_TOKEN", accesstoken);
 				WxArticlesRequest wxArticlesRequest = new WxArticlesRequest();
 				wxArticlesRequest.setArticles(wxArticles);
-				JSONObject obj = JSONObject.fromObject(wxArticlesRequest);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxArticlesRequest));
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-				if (result.has("errcode")) {
+				if (result.containsKey("errcode")) {
 					logger.error("新增永久图文素材失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException(result.getString("errcode"));
 				} else {
@@ -458,9 +446,9 @@ public class JwMediaAPI {
 		if (accesstoken != null) {
 			String requestUrl = material_update_news_url.replace("ACCESS_TOKEN", accesstoken);
 			
-			JSONObject obj = JSONObject.fromObject(wxUpdateArticle);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxUpdateArticle));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			if (result.has("errcode")&&result.getInt("errcode")!=0) {
+			if (result.containsKey("errcode")&&result.getInteger("errcode")!=0) {
 				logger.error("修改永久素材失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 				throw new WexinReqException(result.getString("errcode"));
 			}else{
@@ -485,13 +473,13 @@ public class JwMediaAPI {
 				JSONObject obj = new JSONObject();
 				obj.put("media_id", mediaId);
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-				if (result.has("errcode")) {
+				if (result.containsKey("errcode")) {
 					logger.error("获取永久素材 失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException(result.getString("errcode"));
 				} else {
 					logger.info("====获取永久素材成功====result:"+result.toString());
 					JSONArray newsItemJsonArr = result.getJSONArray("news_item");
-					wxArticleList = JSONArray.toList(newsItemJsonArr, WxNewsArticle.class);
+					wxArticleList = newsItemJsonArr.toJavaList(WxNewsArticle.class);
 				}
 		}
 		return wxArticleList;
@@ -514,7 +502,7 @@ public class JwMediaAPI {
 			obj.put("offset", offset);
 			obj.put("count", count);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			if (result.has("errcode")&&result.getInt("errcode")!=0) {
+			if (result.containsKey("errcode")&&result.getInteger("errcode")!=0) {
 				logger.error("=====获取素材列表失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg")+"=====");
 				throw new WexinReqException(result.getString("errcode"));
 			} else{
@@ -525,12 +513,12 @@ public class JwMediaAPI {
 				for (int i = 0; i < itemArr.length; i++) {
 					WxItem wxItem = new WxItem();
 					Object itemObj = itemArr[i];
-					JSONObject itemJson = JSONObject.fromObject(itemObj);
+					JSONObject itemJson = JSONObject.parseObject(JSON.toJSONString(itemObj));
 					String mediaId = itemJson.getString("media_id");
 					Object newsItemObj = itemJson.get("content");
-					JSONObject newsItemJson = JSONObject.fromObject(newsItemObj);
+					JSONObject newsItemJson = JSONObject.parseObject(JSON.toJSONString(newsItemObj));
 					JSONArray newsItemJsonArr = newsItemJson.getJSONArray("news_item");
-					List<WxNewsArticle> wxArticleList = JSONArray.toList(newsItemJsonArr, WxNewsArticle.class);
+					List<WxNewsArticle> wxArticleList = newsItemJsonArr.toJavaList(WxNewsArticle.class);
 					wxItem.setContents(wxArticleList);
 					wxItem.setMedia_id(mediaId);
 					if(itemJson.containsKey("name")){
@@ -555,12 +543,12 @@ public class JwMediaAPI {
 	 * @throws WexinReqException
 	 */
 	public static void deleteArticlesByMaterialNews(String accesstoken,String mediaId) throws WexinReqException {
-			if (accesstoken != null&&StringUtils.isNotEmpty(mediaId)) {
+			if (accesstoken != null&&!StringUtils.isEmpty(mediaId)) {
 				String requestUrl = material_del_news_url.replace("ACCESS_TOKEN", accesstoken);
 				JSONObject obj = new JSONObject();
 				obj.put("media_id", mediaId);
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-				if (result.has("errcode")&&result.getInt("errcode")!=0) {
+				if (result.containsKey("errcode")&&result.getInteger("errcode")!=0) {
 					logger.error("=====删除永久素材失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg")+"======");
 					throw new WexinReqException(result.getString("errcode"));
 				}else{

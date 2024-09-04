@@ -1,23 +1,19 @@
 package org.jeewx.api.wxstore.product;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.io.IOUtils;
+import org.jeewx.api.core.common.JSONHelper;
+import org.jeewx.api.core.common.WxstoreUtils;
+import org.jeewx.api.core.common.util.WeixinUtil;
+import org.jeewx.api.wxstore.product.model.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.apache.commons.io.IOUtils;
-import org.jeewx.api.core.common.JSONHelper;
-import org.jeewx.api.core.common.WxstoreUtils;
-import org.jeewx.api.core.common.util.WeixinUtil;
-import org.jeewx.api.wxstore.product.model.CateInfo;
-import org.jeewx.api.wxstore.product.model.CommodityRtnInfo;
-import org.jeewx.api.wxstore.product.model.Product;
-import org.jeewx.api.wxstore.product.model.PropertiesInfo;
-import org.jeewx.api.wxstore.product.model.SkuInfo;
 
 
 /**
@@ -53,9 +49,9 @@ public class JwProductAPI {
 	public static CommodityRtnInfo doAddCommodity(String newAccessToken, Product product) {
 		if (newAccessToken != null) {
 			String requestUrl =  WeixinUtil.parseWeiXinHttpUrl(create_commodity_url, newAccessToken);
-			JSONObject obj = JSONObject.fromObject(product);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(product));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toBean(result, CommodityRtnInfo.class);
+			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toJavaObject(result, CommodityRtnInfo.class);
 			return commodityRtnInfo;
 		}
 		return null;
@@ -69,7 +65,7 @@ public class JwProductAPI {
 			String requestUrl = del_commodity_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"product_id\": \""+product_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toBean(result, CommodityRtnInfo.class);
+			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toJavaObject(result, CommodityRtnInfo.class);
 			return commodityRtnInfo;
 		}
 		return null;
@@ -81,9 +77,9 @@ public class JwProductAPI {
 	public static CommodityRtnInfo doUpdateCommodity(String newAccessToken, Product product, String accountid) {
 		if (newAccessToken != null) {
 			String requestUrl = update_commodity_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(product);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(product));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toBean(result, CommodityRtnInfo.class);
+			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toJavaObject(result, CommodityRtnInfo.class);
 			return commodityRtnInfo;
 		}
 		return null;
@@ -100,7 +96,7 @@ public class JwProductAPI {
 			// 正常返回
 			Product product = null;
 			JSONObject info = result.getJSONObject("product_info");
-			product = (Product)JSONObject.toBean(info, Product.class);
+			product = (Product)JSONObject.toJavaObject(info, Product.class);
 			return product;
 		}
 		return null;
@@ -115,7 +111,7 @@ public class JwProductAPI {
 			String requestUrl = getbystatus_commodity_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"status\": "+status+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toBean(result, CommodityRtnInfo.class);
+			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toJavaObject(result, CommodityRtnInfo.class);
 			return commodityRtnInfo;
 		}
 		return null;
@@ -136,7 +132,7 @@ public class JwProductAPI {
 			try {
 				fileByte = fileData(filePath+fileName);
 				JSONObject result = WxstoreUtils.httpRequest2(requestUrl, "POST", fileByte);
-				if (result.getInt("errcode") == 0) {
+				if (result.getInteger("errcode") == 0) {
 					return result.getString("image_url");
 				}
 				return "";
@@ -165,7 +161,7 @@ public class JwProductAPI {
 			String requestUrl = modproductstatus_commodity_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"product_id\":\""+product_id+"\",\"status\": "+status+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toBean(result, CommodityRtnInfo.class);
+			CommodityRtnInfo commodityRtnInfo = (CommodityRtnInfo)JSONObject.toJavaObject(result, CommodityRtnInfo.class);
 			return commodityRtnInfo;
 		}
 		return null;

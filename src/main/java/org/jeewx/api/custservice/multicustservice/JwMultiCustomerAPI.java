@@ -1,16 +1,15 @@
 package org.jeewx.api.custservice.multicustservice;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.custservice.multicustservice.model.ChatRecord;
 import org.jeewx.api.custservice.multicustservice.model.CustService;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 客户服务- 多客户

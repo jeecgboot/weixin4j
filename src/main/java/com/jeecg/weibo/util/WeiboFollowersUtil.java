@@ -1,6 +1,6 @@
 package com.jeecg.weibo.util;
 
-import org.apache.commons.lang.StringUtils;
+import com.alipay.api.internal.util.StringUtils;
 
 import com.jeecg.weibo.dto.WeiboFollowersDto;
 import com.jeecg.weibo.exception.BusinessException;
@@ -26,22 +26,22 @@ public class WeiboFollowersUtil {
 	public static String getFollowersUrl (String interUrl,WeiboFollowersDto followers){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(followers.getAccess_token())){
+		if(!StringUtils.isEmpty(followers.getAccess_token())){
 			requestUrl.append("&access_token="+followers.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(followers.getUid())){
+		if(!StringUtils.isEmpty(followers.getUid())){
 			requestUrl.append("&uid="+followers.getUid());
 		}
-		if(StringUtils.isNotEmpty(followers.getScreen_name())){
+		if(!StringUtils.isEmpty(followers.getScreen_name())){
 			requestUrl.append("&screen_name="+followers.getScreen_name());
 		}
-		if(StringUtils.isNotEmpty(followers.getCount())){
+		if(!StringUtils.isEmpty(followers.getCount())){
 			requestUrl.append("&count="+followers.getCount());
 		}
-		if(StringUtils.isNotEmpty(followers.getCursor())){
+		if(!StringUtils.isEmpty(followers.getCursor())){
 			requestUrl.append("&cursor="+followers.getCursor());
 		}
-		if(StringUtils.isNotEmpty(followers.getTrim_status())){
+		if(!StringUtils.isEmpty(followers.getTrim_status())){
 			requestUrl.append("&trim_status="+followers.getTrim_status());
 		}
 		return requestUrl.toString();
@@ -63,19 +63,19 @@ public class WeiboFollowersUtil {
 	public static String getFollowersIdsUrl(String interUrl,WeiboFollowersDto followers){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(followers.getAccess_token())){
+		if(!StringUtils.isEmpty(followers.getAccess_token())){
 			requestUrl.append("&access_token="+followers.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(followers.getUid())){
+		if(!StringUtils.isEmpty(followers.getUid())){
 			requestUrl.append("&uid="+followers.getUid());
 		}
-		if(StringUtils.isNotEmpty(followers.getScreen_name())){
+		if(!StringUtils.isEmpty(followers.getScreen_name())){
 			requestUrl.append("&screen_name="+followers.getScreen_name());
 		}
-		if(StringUtils.isNotEmpty(followers.getCount())){
+		if(!StringUtils.isEmpty(followers.getCount())){
 			requestUrl.append("&count="+followers.getCount());
 		}
-		if(StringUtils.isNotEmpty(followers.getCursor())){
+		if(!StringUtils.isEmpty(followers.getCursor())){
 			requestUrl.append("&cursor="+followers.getCursor());
 		}
 		return requestUrl.toString();

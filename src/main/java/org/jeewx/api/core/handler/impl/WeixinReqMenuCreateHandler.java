@@ -1,9 +1,6 @@
 package org.jeewx.api.core.handler.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
 import org.jeewx.api.core.annotation.ReqType;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.handler.WeiXinReqHandler;
@@ -16,8 +13,9 @@ import org.jeewx.api.core.util.WeiXinReqUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 菜单创建的处理
@@ -63,13 +61,11 @@ public class WeixinReqMenuCreateHandler implements WeiXinReqHandler {
 			return json.append("]").toString();
 		}
 		List<WeixinButton> sub_button = null;
-		//解决Gson对网页链接中的转义字符问题，改为不转义字符
-		Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 		String objJson = "";
 		for(WeixinButton m : b){
 			sub_button = m.getSub_button();
 			m.setSub_button(null);
-			objJson = gson.toJson(m);
+			objJson = JSON.toJSONString(m);
 			json.append(objJson);
 			if(sub_button != null && sub_button.size() > 0){
 				json.setLength(json.length()-1);

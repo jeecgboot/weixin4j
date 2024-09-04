@@ -1,14 +1,9 @@
 package org.jeewx.api.wxsendmsg;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.req.model.message.IndustryTemplateAdd;
-import org.jeewx.api.core.req.model.message.IndustryTemplateMessageSend;
-import org.jeewx.api.core.req.model.message.IndustryTemplateSet;
-import org.jeewx.api.core.req.model.message.TemplateData;
-import org.jeewx.api.core.req.model.message.TemplateMessage;
+import org.jeewx.api.core.req.model.message.*;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

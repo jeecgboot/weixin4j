@@ -1,18 +1,9 @@
 package org.jeewx.api.coupon.location;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.common.WxstoreUtils;
-import org.jeewx.api.coupon.location.model.Batchadd;
-import org.jeewx.api.coupon.location.model.BatchaddRtn;
-import org.jeewx.api.coupon.location.model.Batchget;
-import org.jeewx.api.coupon.location.model.BatchgetRtn;
-import org.jeewx.api.coupon.location.model.CardInfo;
-import org.jeewx.api.coupon.location.model.CardInfoRtn;
-import org.jeewx.api.coupon.location.model.Getcolors;
-import org.jeewx.api.coupon.location.model.GetcolorsRtn;
+import org.jeewx.api.coupon.location.model.*;
 
 
 /**
@@ -40,7 +31,7 @@ public class JwLocationAPI {
 		if (accesstoken != null) {
 			batchadd.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(batchadd);
-			BatchaddRtn batchaddRtn = (BatchaddRtn)JSONObject.toBean(result, BatchaddRtn.class);
+			BatchaddRtn batchaddRtn = (BatchaddRtn)JSONObject.toJavaObject(result, BatchaddRtn.class);
 			return batchaddRtn;
 		}
 		return null;
@@ -53,7 +44,7 @@ public class JwLocationAPI {
 		if (accesstoken != null) {
 			batchget.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(batchget);
-			BatchgetRtn batchgetRtn = (BatchgetRtn)JSONObject.toBean(result, BatchgetRtn.class);
+			BatchgetRtn batchgetRtn = (BatchgetRtn)JSONObject.toJavaObject(result, BatchgetRtn.class);
 			return batchgetRtn;
 		}
 		return null;
@@ -67,7 +58,7 @@ public class JwLocationAPI {
 			Getcolors gk = new Getcolors();
 			gk.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(gk);
-			GetcolorsRtn getcolorsRtn = (GetcolorsRtn)JSONObject.toBean(result, GetcolorsRtn.class);
+			GetcolorsRtn getcolorsRtn = (GetcolorsRtn)JSONObject.toJavaObject(result, GetcolorsRtn.class);
 			return getcolorsRtn;
 		}
 		return null;
@@ -80,7 +71,7 @@ public class JwLocationAPI {
 		if (accesstoken != null) {
 			cardInfo.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(cardInfo);
-			CardInfoRtn cardInfoRtn = (CardInfoRtn)JSONObject.toBean(result, CardInfoRtn.class);
+			CardInfoRtn cardInfoRtn = (CardInfoRtn)JSONObject.toJavaObject(result, CardInfoRtn.class);
 			return cardInfoRtn;
 		}
 		return null;

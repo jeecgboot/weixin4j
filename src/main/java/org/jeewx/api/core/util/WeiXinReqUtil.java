@@ -1,15 +1,7 @@
 package org.jeewx.api.core.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -21,7 +13,10 @@ import org.jeewx.api.core.req.model.WeixinReqParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 获取微信接口的信息
@@ -142,11 +137,10 @@ public class WeiXinReqUtil {
 	 * @return
 	 */
 	public static Map getWeixinReqParam(WeixinReqParam weixinReqParam) {
-		Gson gson = new Gson();
 		Map params = null;
 		try{
-			String json = gson.toJson(weixinReqParam);
-			params = gson.fromJson(json, Map.class);
+			String json = JSON.toJSONString(weixinReqParam);
+			params = JSONObject.parseObject(json).toJavaObject(Map.class);
 			
 		}catch(Exception e){
 			logger.error("处理参数解析出错", e);
@@ -163,8 +157,7 @@ public class WeiXinReqUtil {
 	 * @return
 	 */
 	public static String getWeixinParamJson(WeixinReqParam weixinReqParam) {
-		Gson gson = new Gson();
-		String json = gson.toJson(weixinReqParam);
+		String json = JSON.toJSONString(weixinReqParam);
 		return json;
 	}
 

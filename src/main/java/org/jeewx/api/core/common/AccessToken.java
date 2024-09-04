@@ -1,6 +1,6 @@
 package org.jeewx.api.core.common;
 
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 public class AccessToken {
 

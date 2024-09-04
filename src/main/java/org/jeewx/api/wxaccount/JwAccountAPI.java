@@ -1,7 +1,6 @@
 package org.jeewx.api.wxaccount;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.core.req.model.account.QrcodeActionInfo;
@@ -59,7 +58,7 @@ public class JwAccountAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(qrcodeCreate);
 		Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 		WxQrcode wxQrcode = null;
-		wxQrcode = (WxQrcode) JSONObject.toBean(result, WxQrcode.class);
+		wxQrcode = (WxQrcode) JSONObject.toJavaObject(result, WxQrcode.class);
 		return wxQrcode;
 	}
 

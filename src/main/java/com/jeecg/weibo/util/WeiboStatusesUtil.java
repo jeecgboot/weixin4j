@@ -1,6 +1,6 @@
 package com.jeecg.weibo.util;
 
-import org.apache.commons.lang.StringUtils;
+import com.alipay.api.internal.util.StringUtils;
 
 import com.jeecg.weibo.dto.WeiBoMentionsDto;
 import com.jeecg.weibo.dto.WeiboUserTimelineDto;
@@ -23,34 +23,34 @@ public class WeiboStatusesUtil {
 	public static String getUserTimelineUrl (String interUrl,WeiboUserTimelineDto userTimeline){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(userTimeline.getAccess_token())){
+		if(!StringUtils.isEmpty(userTimeline.getAccess_token())){
 			requestUrl.append("&access_token="+userTimeline.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getUid())){
+		if(!StringUtils.isEmpty(userTimeline.getUid())){
 			requestUrl.append("&uid="+userTimeline.getUid());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getScreen_name())){
+		if(!StringUtils.isEmpty(userTimeline.getScreen_name())){
 			requestUrl.append("&screen_name="+userTimeline.getScreen_name());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getSince_id())){
+		if(!StringUtils.isEmpty(userTimeline.getSince_id())){
 			requestUrl.append("&since_id="+userTimeline.getSince_id());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getMax_id())){
+		if(!StringUtils.isEmpty(userTimeline.getMax_id())){
 			requestUrl.append("&max_id="+userTimeline.getMax_id());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getCount())){
+		if(!StringUtils.isEmpty(userTimeline.getCount())){
 			requestUrl.append("&count="+userTimeline.getCount());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getPage())){
+		if(!StringUtils.isEmpty(userTimeline.getPage())){
 			requestUrl.append("&page="+userTimeline.getPage());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getBase_app())){
+		if(!StringUtils.isEmpty(userTimeline.getBase_app())){
 			requestUrl.append("&base_app="+userTimeline.getBase_app());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getFeature())){
+		if(!StringUtils.isEmpty(userTimeline.getFeature())){
 			requestUrl.append("&feature="+userTimeline.getFeature());
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getTrim_user())){
+		if(!StringUtils.isEmpty(userTimeline.getTrim_user())){
 			requestUrl.append("trim_user="+userTimeline.getTrim_user());
 		}
 		return requestUrl.toString();
@@ -66,7 +66,7 @@ public class WeiboStatusesUtil {
 		if(StringUtils.isEmpty(userTimeline.getUid())&&(StringUtils.isEmpty(userTimeline.getScreen_name()))){
 			throw new BusinessException("uid与screen_name二者不能全为空");
 		}
-		if(StringUtils.isNotEmpty(userTimeline.getUid())&&(StringUtils.isNotEmpty(userTimeline.getScreen_name()))){
+		if(!StringUtils.isEmpty(userTimeline.getUid())&&(!StringUtils.isEmpty(userTimeline.getScreen_name()))){
 			throw new BusinessException("uid与screen_name二者只能选其一");
 		}
 	}
@@ -96,10 +96,10 @@ public class WeiboStatusesUtil {
 	public static String getCountUrl (String interUrl,String access_token,String ids){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(access_token)){
+		if(!StringUtils.isEmpty(access_token)){
 			requestUrl.append("&access_token="+access_token);
 		}
-		if(StringUtils.isNotEmpty(ids)){
+		if(!StringUtils.isEmpty(ids)){
 			requestUrl.append("&ids="+ids);
 		}
 		return requestUrl.toString();
@@ -128,10 +128,10 @@ public class WeiboStatusesUtil {
 	public static String getShowUrl (String interUrl,String access_token,String id){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(access_token)){
+		if(!StringUtils.isEmpty(access_token)){
 			requestUrl.append("&access_token="+access_token);
 		}
-		if(StringUtils.isNotEmpty(id)){
+		if(!StringUtils.isEmpty(id)){
 			requestUrl.append("&id="+id);
 		}
 		return requestUrl.toString();
@@ -153,28 +153,28 @@ public class WeiboStatusesUtil {
 	public static String getMentionsUrl (String interUrl,WeiBoMentionsDto mentions){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(mentions.getAccess_token())){
+		if(!StringUtils.isEmpty(mentions.getAccess_token())){
 			requestUrl.append("&access_token="+mentions.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(mentions.getSince_id())){
+		if(!StringUtils.isEmpty(mentions.getSince_id())){
 			requestUrl.append("&since_id="+mentions.getSince_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getMax_id())){
+		if(!StringUtils.isEmpty(mentions.getMax_id())){
 			requestUrl.append("&max_id="+mentions.getMax_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getCount())){
+		if(!StringUtils.isEmpty(mentions.getCount())){
 			requestUrl.append("&count="+mentions.getCount());
 		}
-		if(StringUtils.isNotEmpty(mentions.getPage())){
+		if(!StringUtils.isEmpty(mentions.getPage())){
 			requestUrl.append("&page="+mentions.getPage());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_author())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_author())){
 			requestUrl.append("&filter_by_author="+mentions.getFilter_by_author());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_source())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_source())){
 			requestUrl.append("&filter_by_source="+mentions.getFilter_by_source());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_type())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_type())){
 			requestUrl.append("&filter_by_type="+mentions.getFilter_by_type());
 		}
 		return requestUrl.toString();

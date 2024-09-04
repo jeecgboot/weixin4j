@@ -1,11 +1,10 @@
 package org.jeewx.api.wxsendmsg;
 
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.json.JSONObject;
 
 public class JwMessageCommentAPI {
 	private static Logger logger = LoggerFactory.getLogger(JwMessageCommentAPI.class);

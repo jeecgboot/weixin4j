@@ -1,26 +1,18 @@
 package org.jeewx.api.report.datastatistics.graphicanalysis;
 
-import java.io.UnsupportedEncodingException;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamArticleSummaryParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamArticleTotalParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserReadHourParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserReadParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserShareHourParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserShareParam;
+import org.jeewx.api.core.req.model.dataCube.*;
 import org.jeewx.api.report.datastatistics.graphicanalysis.model.GraphicAnalysisRtnInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import java.io.UnsupportedEncodingException;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /** 
 * @ClassName: JwGraphicAnalysisAPI 
@@ -67,7 +59,7 @@ public class JwGraphicAnalysisAPI {
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
 					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
+							.toJavaObject((JSONObject) object,
 									GraphicAnalysisRtnInfo.class);
 					graphicAnalysisRtnInfoList.add(graphicAnalysisRtnInfo);
 				}
@@ -106,10 +98,9 @@ public class JwGraphicAnalysisAPI {
 				JSONArray array = null;
 				GraphicAnalysisRtnInfo graphicAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
-				Gson gson = new Gson();
 				//修复JSONObject不能解析details内容的BUG
 				for (Object object : array) {
-					graphicAnalysisRtnInfo = gson.fromJson(object.toString(), GraphicAnalysisRtnInfo.class); 
+					graphicAnalysisRtnInfo = JSONObject.parseObject(object.toString(), GraphicAnalysisRtnInfo.class);
 //					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
 //							.toBean((JSONObject) object,
 //									GraphicAnalysisRtnInfo.class);
@@ -151,9 +142,7 @@ public class JwGraphicAnalysisAPI {
 				GraphicAnalysisRtnInfo graphicAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									GraphicAnalysisRtnInfo.class);
+					graphicAnalysisRtnInfo = ((JSONObject) object).toJavaObject(GraphicAnalysisRtnInfo.class);
 					graphicAnalysisRtnInfoList.add(graphicAnalysisRtnInfo);
 				}
 				return graphicAnalysisRtnInfoList;
@@ -191,10 +180,7 @@ public class JwGraphicAnalysisAPI {
 				GraphicAnalysisRtnInfo graphicAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									GraphicAnalysisRtnInfo.class);
-
+					graphicAnalysisRtnInfo = ((JSONObject) object).toJavaObject(GraphicAnalysisRtnInfo.class);
 					graphicAnalysisRtnInfoList.add(graphicAnalysisRtnInfo);
 				}
 				return graphicAnalysisRtnInfoList;
@@ -232,9 +218,7 @@ public class JwGraphicAnalysisAPI {
 				GraphicAnalysisRtnInfo graphicAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									GraphicAnalysisRtnInfo.class);
+					graphicAnalysisRtnInfo = ((JSONObject) object).toJavaObject(GraphicAnalysisRtnInfo.class);
 
 					graphicAnalysisRtnInfoList.add(graphicAnalysisRtnInfo);
 				}
@@ -262,10 +246,7 @@ public class JwGraphicAnalysisAPI {
 				GraphicAnalysisRtnInfo graphicAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					graphicAnalysisRtnInfo = (GraphicAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									GraphicAnalysisRtnInfo.class);
-
+					graphicAnalysisRtnInfo = ((JSONObject) object).toJavaObject(GraphicAnalysisRtnInfo.class);
 					graphicAnalysisRtnInfoList.add(graphicAnalysisRtnInfo);
 				}
 				return graphicAnalysisRtnInfoList;

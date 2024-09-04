@@ -1,12 +1,7 @@
 package org.jeewx.api.report.datastatistics.useranalysis;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserCumulateParam;
@@ -14,6 +9,10 @@ import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamUserSummaryParam;
 import org.jeewx.api.report.datastatistics.useranalysis.model.UserAnalysisRtnInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /** 
 * @ClassName: JwUserAnalysisAPI 
@@ -56,9 +55,7 @@ public class JwUserAnalysisAPI {
 				UserAnalysisRtnInfo userAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					userAnalysisRtnInfo = (UserAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									UserAnalysisRtnInfo.class);
+					userAnalysisRtnInfo = ((JSONObject) object).toJavaObject(UserAnalysisRtnInfo.class);
 					userAnalysisRtnInfoList.add(userAnalysisRtnInfo);
 				}
 				return userAnalysisRtnInfoList;
@@ -94,9 +91,7 @@ public class JwUserAnalysisAPI {
 				UserAnalysisRtnInfo userAnalysisRtnInfo = null;
 				array = (JSONArray) result.get("list");
 				for (Object object : array) {
-					userAnalysisRtnInfo = (UserAnalysisRtnInfo) JSONObject
-							.toBean((JSONObject) object,
-									UserAnalysisRtnInfo.class);
+					userAnalysisRtnInfo = ((JSONObject) object).toJavaObject(UserAnalysisRtnInfo.class);
 					userAnalysisRtnInfoList.add(userAnalysisRtnInfo);
 				}
 				return userAnalysisRtnInfoList;

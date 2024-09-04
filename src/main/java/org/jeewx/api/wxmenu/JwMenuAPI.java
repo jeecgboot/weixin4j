@@ -1,24 +1,19 @@
 package org.jeewx.api.wxmenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import net.sf.json.util.JSONUtils;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.req.model.menu.MenuConfigureGet;
-import org.jeewx.api.core.req.model.menu.MenuCreate;
-import org.jeewx.api.core.req.model.menu.MenuDelete;
-import org.jeewx.api.core.req.model.menu.MenuGet;
-import org.jeewx.api.core.req.model.menu.WeixinButton;
+import org.jeewx.api.core.req.model.menu.*;
 import org.jeewx.api.core.req.model.menu.config.CustomWeixinButtonConfig;
 import org.jeewx.api.core.req.model.menu.config.WeixinButtonExtend;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.jeewx.api.extend.CustomJsonConfig;
 import org.jeewx.api.wxsendmsg.model.WxArticleConfig;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信--menu
@@ -77,13 +72,13 @@ public class JwMenuAPI {
 		WeixinButton subBtn = null;
 		List<WeixinButton> lstSubButton = null;
 		for (int i = 0; i < buttons.size(); i++) {
-			btn = (WeixinButton) JSONObject.toBean(buttons.getJSONObject(i),
+			btn = (WeixinButton) JSONObject.toJavaObject(buttons.getJSONObject(i),
 					WeixinButton.class);
 			subButtons = buttons.getJSONObject(i).getJSONArray("sub_button");
 			if (subButtons != null) {
 				lstSubButton = new ArrayList<WeixinButton>();
 				for (int j = 0; j < subButtons.size(); j++) {
-					subBtn = (WeixinButton) JSONObject.toBean(
+					subBtn = (WeixinButton) JSONObject.toJavaObject(
 							subButtons.getJSONObject(j), WeixinButton.class);
 					lstSubButton.add(subBtn);
 				}
@@ -122,30 +117,39 @@ public class JwMenuAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(cmcg);
 		Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 		
-		CustomWeixinButtonConfig customWeixinButtonConfig = (CustomWeixinButtonConfig) JSONObject.toBean(result, new CustomJsonConfig(CustomWeixinButtonConfig.class,"selfmenu_info"));
+//		CustomWeixinButtonConfig customWeixinButtonConfig = (CustomWeixinButtonConfig) JSONObject.toJavaObject(result, new CustomJsonConfig(CustomWeixinButtonConfig.class,"selfmenu_info"));
+		SimplePropertyPreFilter selfMenuFilter = new SimplePropertyPreFilter();
+		selfMenuFilter.getExcludes().add("selfmenu_info");
+		CustomWeixinButtonConfig customWeixinButtonConfig = JSONObject.parseObject(JSONObject.toJSONString(result, selfMenuFilter), CustomWeixinButtonConfig.class);
 		
 		JSONObject selfmenuInfo = result.getJSONObject("selfmenu_info");
-		if(selfmenuInfo!=null && !JSONUtils.isNull(selfmenuInfo)){ 
+		if(selfmenuInfo!=null && !selfmenuInfo.isEmpty()){
 			/**处理父类菜单 */
 			JSONArray buttons = selfmenuInfo.getJSONArray("button");
 			List<WeixinButtonExtend> listButton = new ArrayList<WeixinButtonExtend>();
 			for(int i=0;i<buttons.size();i++){
-				WeixinButtonExtend weixinButtonExtend = (WeixinButtonExtend) JSONObject.toBean(buttons.getJSONObject(i),new CustomJsonConfig(WeixinButtonExtend.class,"sub_button"));
+//				WeixinButtonExtend weixinButtonExtend = (WeixinButtonExtend) JSONObject.toJavaObject(buttons.getJSONObject(i),new CustomJsonConfig(WeixinButtonExtend.class,"sub_button"));
+				SimplePropertyPreFilter subButtongFilter = new SimplePropertyPreFilter();
+				subButtongFilter.getExcludes().add("sub_button");
+				WeixinButtonExtend weixinButtonExtend = JSONObject.parseObject(JSONObject.toJSONString(buttons.getJSONObject(i), subButtongFilter), WeixinButtonExtend.class);
 				/**处理子类菜单 */
 				JSONObject subButtonJsonObj = buttons.getJSONObject(i).getJSONObject("sub_button");
-				if(subButtonJsonObj!=null && !JSONUtils.isNull(subButtonJsonObj)){
+				if(subButtonJsonObj!=null && !subButtonJsonObj.isEmpty()){
 					JSONArray subButtons = subButtonJsonObj.getJSONArray("list");
 					if (subButtons != null) {
 						List<WeixinButtonExtend> listSubButton = new ArrayList<WeixinButtonExtend>();
 						for (int j = 0; j < subButtons.size(); j++) {
-							WeixinButtonExtend subBtn = (WeixinButtonExtend) JSONObject.toBean(subButtons.getJSONObject(j), new CustomJsonConfig(WeixinButtonExtend.class,"news_info"));
+//							WeixinButtonExtend subBtn = (WeixinButtonExtend) JSONObject.toJavaObject(subButtons.getJSONObject(j), new CustomJsonConfig(WeixinButtonExtend.class,"news_info"));
+							SimplePropertyPreFilter newsInfoFilter = new SimplePropertyPreFilter();
+							newsInfoFilter.getExcludes().add("news_info");
+							WeixinButtonExtend subBtn = JSONObject.parseObject(JSONObject.toJSONString(subButtons.getJSONObject(j), newsInfoFilter), WeixinButtonExtend.class);
 							/**处理菜单关联的图文消息 */
 							JSONObject newsInfoJsonObj = subButtons.getJSONObject(j).getJSONObject("news_info");
-							if(newsInfoJsonObj!=null && !JSONUtils.isNull(newsInfoJsonObj)){
+							if(newsInfoJsonObj!=null && !newsInfoJsonObj.isEmpty()){
 								JSONArray newsInfos = newsInfoJsonObj.getJSONArray("list");
 								List<WxArticleConfig> listNewsInfo = new ArrayList<WxArticleConfig>();
 								for (int k = 0; k < newsInfos.size(); k++) {
-									WxArticleConfig wxArticleConfig = (WxArticleConfig) JSONObject.toBean(newsInfos.getJSONObject(k), WxArticleConfig.class);
+									WxArticleConfig wxArticleConfig = (WxArticleConfig) JSONObject.toJavaObject(newsInfos.getJSONObject(k), WxArticleConfig.class);
 									listNewsInfo.add(wxArticleConfig);
 								}
 								subBtn.setNews_info(listNewsInfo);

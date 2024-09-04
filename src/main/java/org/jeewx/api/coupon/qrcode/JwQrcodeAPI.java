@@ -1,7 +1,6 @@
 package org.jeewx.api.coupon.qrcode;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.coupon.qrcode.model.Getticket;
@@ -25,7 +24,7 @@ public class JwQrcodeAPI {
 		if (accesstoken != null) {
 			qrcodeInfo.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(qrcodeInfo);
-			QrcodeRtnInfo qrcodeRtnInfo = (QrcodeRtnInfo)JSONObject.toBean(result, QrcodeRtnInfo.class);
+			QrcodeRtnInfo qrcodeRtnInfo = (QrcodeRtnInfo)JSONObject.toJavaObject(result, QrcodeRtnInfo.class);
 			return qrcodeRtnInfo;
 		}
 		return null;
@@ -39,7 +38,7 @@ public class JwQrcodeAPI {
 			Getticket gk = new Getticket();
 			gk.setAccess_token(accesstoken);
 			JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(gk);
-			GetticketRtn getticketRtn = (GetticketRtn)JSONObject.toBean(result, GetticketRtn.class);
+			GetticketRtn getticketRtn = (GetticketRtn)JSONObject.toJavaObject(result, GetticketRtn.class);
 			return getticketRtn;
 		}
 		return null;

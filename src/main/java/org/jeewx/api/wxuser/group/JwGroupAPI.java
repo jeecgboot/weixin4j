@@ -1,25 +1,15 @@
 package org.jeewx.api.wxuser.group;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.jeewx.api.core.common.AccessToken;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.req.model.user.BatchGroupMembersUpdate;
-import org.jeewx.api.core.req.model.user.Group;
-import org.jeewx.api.core.req.model.user.GroupCreate;
-import org.jeewx.api.core.req.model.user.GroupDelete;
-import org.jeewx.api.core.req.model.user.GroupGet;
-import org.jeewx.api.core.req.model.user.GroupGetId;
-import org.jeewx.api.core.req.model.user.GroupMembersUpdate;
-import org.jeewx.api.core.req.model.user.GroupUpdate;
+import org.jeewx.api.core.req.model.user.*;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.jeewx.api.wxbase.wxtoken.JwTokenAPI;
-import org.jeewx.api.wxuser.user.JwUserAPI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信--用户
@@ -49,7 +39,7 @@ public class JwGroupAPI {
 		JSONObject result = WeiXinReqService.getInstance().doWeinxinReqJson(c);
 		Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 		GroupCreate groupCreate = null;
-		groupCreate = (GroupCreate) JSONObject.toBean(result, GroupCreate.class);
+		groupCreate = (GroupCreate) JSONObject.toJavaObject(result, GroupCreate.class);
 		return groupCreate;
 	}
 	
@@ -68,7 +58,7 @@ public class JwGroupAPI {
 		JSONArray infoArray = result.getJSONArray(RETURN_INFO_NAME);
 		lstGroup = new ArrayList<Group>(infoArray.size());
 		for(int i=0;i<infoArray.size();i++){
-			Group group = (Group)JSONObject.toBean(infoArray.getJSONObject(i), Group.class);
+			Group group = (Group)JSONObject.toJavaObject(infoArray.getJSONObject(i), Group.class);
 			if(!"未分组".equals(group.getName())){
 				lstGroup.add(group);
 			}

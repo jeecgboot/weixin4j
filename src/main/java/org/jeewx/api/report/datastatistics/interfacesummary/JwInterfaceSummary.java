@@ -1,9 +1,9 @@
 package org.jeewx.api.report.datastatistics.interfacesummary;
 
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.sf.json.JSONObject;
 
 public class JwInterfaceSummary {
 	
@@ -28,7 +28,7 @@ public class JwInterfaceSummary {
 	 *<br>	total_time_cost	总耗时，除以callback_count即为平均耗时
 	 *<br>	max_time_cost	最大耗时
 	 */
-	public static JSONObject getinterfacesummary(String accessToken,String beginDate,String endDate){
+	public static JSONObject getinterfacesummary(String accessToken, String beginDate, String endDate){
 		if(accessToken==null){
 			logger.error("传入的accessToken为空");
 			return null;

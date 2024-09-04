@@ -1,11 +1,9 @@
 package org.jeewx.api.coupon.consume;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
+import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.coupon.consume.model.ConsumeRtnInfo;
 import org.jeewx.api.coupon.consume.model.EncryptRtnInfo;
-import org.jeewx.api.core.common.AccessToken;
-import org.jeewx.api.core.common.WxstoreUtils;
 
 /**
  * 微信卡券 - 核销接口
@@ -30,7 +28,7 @@ public class JwCardConsumeAPI {
 					newAccessToken);
 			String json = emptyStrJson("code",code,"card_id",card_id);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			ConsumeRtnInfo consumeRtnInfo = (ConsumeRtnInfo) JSONObject.toBean(
+			ConsumeRtnInfo consumeRtnInfo = (ConsumeRtnInfo) JSONObject.toJavaObject(
 					result, ConsumeRtnInfo.class);
 			return consumeRtnInfo;
 		}
@@ -49,7 +47,7 @@ public class JwCardConsumeAPI {
 					newAccessToken);
 			String json = emptyStrJson("encrypt_code",encrypt_code);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			EncryptRtnInfo encryptRtnInfo = (EncryptRtnInfo) JSONObject.toBean(
+			EncryptRtnInfo encryptRtnInfo = (EncryptRtnInfo) JSONObject.toJavaObject(
 					result, EncryptRtnInfo.class);
 			return encryptRtnInfo;
 		}
