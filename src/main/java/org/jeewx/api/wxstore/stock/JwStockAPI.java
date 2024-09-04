@@ -1,10 +1,10 @@
 package org.jeewx.api.wxstore.stock;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.wxstore.stock.model.StockInfo;
 import org.jeewx.api.wxstore.stock.model.StockRtnInfo;
-
-import net.sf.json.JSONObject;
 
 
 /**
@@ -24,9 +24,9 @@ public class JwStockAPI {
 	public static StockRtnInfo doAddStock(String newAccessToken, StockInfo stockInfo) {
 		if (newAccessToken != null) {
 			String requestUrl = add_stock_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(stockInfo);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(stockInfo));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			StockRtnInfo stockRtnInfo = (StockRtnInfo)JSONObject.toBean(result, StockRtnInfo.class);
+			StockRtnInfo stockRtnInfo = (StockRtnInfo)JSONObject.toJavaObject(result, StockRtnInfo.class);
 			return stockRtnInfo;
 		}
 		return null;
@@ -38,9 +38,9 @@ public class JwStockAPI {
 	public static StockRtnInfo doSubStock(String newAccessToken, StockInfo stockInfo) {
 		if (newAccessToken != null) {
 			String requestUrl = sub_stock_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(stockInfo);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(stockInfo));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			StockRtnInfo stockRtnInfo = (StockRtnInfo)JSONObject.toBean(result, StockRtnInfo.class);
+			StockRtnInfo stockRtnInfo = (StockRtnInfo)JSONObject.toJavaObject(result, StockRtnInfo.class);
 			return stockRtnInfo;
 		}
 		return null;

@@ -1,14 +1,14 @@
 package org.jeewx.api.wxstore.deliveryMoney;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.wxstore.deliveryMoney.model.DeliveryMoney;
 import org.jeewx.api.wxstore.deliveryMoney.model.DeliveryMoneyRtnInfo;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.util.List;
 
 
 /**
@@ -36,9 +36,9 @@ public class JwDeliveryMoneyAPI {
 	public static DeliveryMoneyRtnInfo doAddExpress(String newAccessToken, DeliveryMoney postage) {
 		if (newAccessToken != null) {
 			String requestUrl = create_postage_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(postage);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(postage));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toBean(result, DeliveryMoneyRtnInfo.class);
+			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toJavaObject(result, DeliveryMoneyRtnInfo.class);
 			return postageRtnInfo;
 		}
 		return null;
@@ -54,7 +54,7 @@ public class JwDeliveryMoneyAPI {
 			String requestUrl = del_postage_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"template_id\": "+template_id+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toBean(result, DeliveryMoneyRtnInfo.class);
+			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toJavaObject(result, DeliveryMoneyRtnInfo.class);
 			return postageRtnInfo;
 		}
 		return null;
@@ -68,9 +68,9 @@ public class JwDeliveryMoneyAPI {
 	public static DeliveryMoneyRtnInfo doUpdateExpress(String newAccessToken, DeliveryMoney postage) {
 		if (newAccessToken != null) {
 			String requestUrl = update_postage_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(postage);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(postage));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toBean(result, DeliveryMoneyRtnInfo.class);
+			DeliveryMoneyRtnInfo postageRtnInfo = (DeliveryMoneyRtnInfo)JSONObject.toJavaObject(result, DeliveryMoneyRtnInfo.class);
 			return postageRtnInfo;
 		}
 		return null;

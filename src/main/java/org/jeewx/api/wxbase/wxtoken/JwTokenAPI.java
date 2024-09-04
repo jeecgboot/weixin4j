@@ -1,7 +1,6 @@
 package org.jeewx.api.wxbase.wxtoken;
 
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.core.req.model.AccessToken;

@@ -1,31 +1,20 @@
 package org.jeewx.api.core.common;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import com.alibaba.fastjson.JSONObject;
+import org.jeewx.api.core.exception.WexinReqException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.Base64;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-
-import org.jeewx.api.core.exception.WexinReqException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import net.sf.json.JSONObject;
 
 /**
  * 
@@ -37,7 +26,7 @@ public class WxstoreUtils {
 	private static Logger logger = LoggerFactory.getLogger(WxstoreUtils.class);
 
 	public static JSONObject httpRequest(String requestUrl,
-			String requestMethod, String outputStr) {
+										 String requestMethod, String outputStr) {
 		logger.debug("*********HTTPREQUEST START********");
 		logger.debug("*********requestUrl is "+
 				requestUrl+" END AND requestMethod IS"
@@ -90,8 +79,8 @@ public class WxstoreUtils {
 			inputStream.close();
 			inputStream = null;
 			httpUrlConn.disconnect();
-			jsonObject = JSONObject.fromObject(buffer.toString());
-			if (jsonObject.containsKey("errcode") && jsonObject.getInt("errcode") != 0) {
+			jsonObject = JSONObject.parseObject(buffer.toString());
+			if (jsonObject.containsKey("errcode") && jsonObject.getInteger("errcode") != 0) {
 				logger.debug("********* ERROR********{}",buffer.toString());
 				logger.debug("*********HTTPREQUEST END********");
 				throw new WexinReqException("httpRequest Method！errcode="
@@ -157,7 +146,7 @@ public class WxstoreUtils {
 			inputStream.close();
 			inputStream = null;
 			httpUrlConn.disconnect();
-			jsonObject = JSONObject.fromObject(buffer.toString());
+			jsonObject = JSONObject.parseObject(buffer.toString());
 		} catch (ConnectException ce) {
 			System.out.print("Weixin server connection timed out.");
 		} catch (Exception e) {
@@ -280,7 +269,7 @@ public class WxstoreUtils {
 				bufferStr.append(str);
 			}
 
-			jsonObject = JSONObject.fromObject(bufferStr.toString());
+			jsonObject = JSONObject.parseObject(bufferStr.toString());
 			// System.out.println("-------------读取URL链接返回字符串--------------" +
 			// bufferStr.toString());
 
@@ -397,7 +386,7 @@ public class WxstoreUtils {
 						reader.close();
 					}
 				}
-				jsonObject = JSONObject.fromObject(result);
+				jsonObject = JSONObject.parseObject(result);
 				
 			} catch (Exception e) {
 				e.printStackTrace();

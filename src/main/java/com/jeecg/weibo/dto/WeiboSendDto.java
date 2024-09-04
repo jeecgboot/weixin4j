@@ -1,8 +1,8 @@
 package com.jeecg.weibo.dto;
 
-import java.net.URLEncoder;
+import com.alipay.api.internal.util.StringUtils;
 
-import org.apache.commons.lang.StringUtils;
+import java.net.URLEncoder;
 
 /**
  * 发布微博   
@@ -27,7 +27,7 @@ public class WeiboSendDto {
 	}
 	public String getStatus() {
 		String encode = "";
-		if(StringUtils.isNotEmpty(status)){
+		if(!StringUtils.isEmpty(status)){
 			encode = URLEncoder.encode(status);
 		}
 		return encode;

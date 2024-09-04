@@ -1,16 +1,16 @@
 package org.jeewx.api.report.interfacesummary;
 
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.jeewx.api.core.req.model.interfacesummary.InterfaceSummaryParam;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.AccessToken;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
+import org.jeewx.api.core.req.model.interfacesummary.InterfaceSummaryParam;
 import org.jeewx.api.report.interfacesummary.model.InterfaceSummary;
 import org.jeewx.api.report.interfacesummary.model.InterfaceSummaryHour;
+
+import java.util.List;
 
 
 /**
@@ -33,7 +33,7 @@ public class JwInterfaceSummaryAPI {
 		if (accesstoken != null) {
 			param.setAccess_token(accesstoken);
 			String requestUrl = getinterfacesummaryhour_url.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(param);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(param));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "GET", obj.toString());
 			// 正常返回
 			List<InterfaceSummaryHour> list = null;
@@ -53,7 +53,7 @@ public class JwInterfaceSummaryAPI {
 		if (accesstoken != null) {
 			param.setAccess_token(accesstoken);
 			String requestUrl = getinterfacesummary_url.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(param);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(param));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "GET", obj.toString());
 			// 正常返回
 			List<InterfaceSummary> list = null;

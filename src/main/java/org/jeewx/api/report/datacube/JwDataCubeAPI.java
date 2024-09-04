@@ -1,27 +1,15 @@
 package org.jeewx.api.report.datacube;
 
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.jeewx.api.core.exception.WexinReqException;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgDistMonthParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgDistParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgDistWeekParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgHourParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgMonthParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgParam;
-import org.jeewx.api.core.req.model.dataCube.WxDataCubeStreamMsgWeekParam;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgDistInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgDistMonthInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgDistWeekInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgHourInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgMonthInfo;
-import org.jeewx.api.report.datacube.model.WxDataCubeStreamMsgWeekInfo;
+import org.jeewx.api.core.exception.WexinReqException;
+import org.jeewx.api.core.req.model.dataCube.*;
+import org.jeewx.api.report.datacube.model.*;
+
+import java.util.List;
 
 /**
  * 分析数据接口service
@@ -63,7 +51,7 @@ public class JwDataCubeAPI {
 			msgParam.setEnd_date(eDate);
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSG_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 			
@@ -96,7 +84,7 @@ public class JwDataCubeAPI {
 			
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGHOUR_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 
@@ -128,7 +116,7 @@ public class JwDataCubeAPI {
 			
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGWEEK_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 
@@ -160,7 +148,7 @@ public class JwDataCubeAPI {
 			
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGMONTH_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 
@@ -193,7 +181,7 @@ public class JwDataCubeAPI {
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGDIST_URL.replace("ACCESS_TOKEN",
 					accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST",
 					obj.toString());
 
@@ -227,7 +215,7 @@ public class JwDataCubeAPI {
 			
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGDISTWEEK_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 
@@ -259,7 +247,7 @@ public class JwDataCubeAPI {
 			
 			// 调用接口
 			String requestUrl = GETUPSTREAMMSGDISTMONTH_URL.replace("ACCESS_TOKEN", accesstoken);
-			JSONObject obj = JSONObject.fromObject(msgParam);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgParam));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get("errcode");
 

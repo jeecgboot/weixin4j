@@ -1,23 +1,17 @@
 package com.jeecg.qywx.api.conversation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jeecg.qywx.api.base.JwAccessTokenAPI;
-import com.jeecg.qywx.api.base.JwParamesAPI;
 import com.jeecg.qywx.api.conversation.vo.BaseMessage;
 import com.jeecg.qywx.api.conversation.vo.Conversation;
 import com.jeecg.qywx.api.conversation.vo.Conversation4Update;
 import com.jeecg.qywx.api.conversation.vo.Mute;
-import com.jeecg.qywx.api.core.common.AccessToken;
 import com.jeecg.qywx.api.core.common.MsgResponse;
 import com.jeecg.qywx.api.core.util.HttpUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 /**
  * 
  * @author SunHaiFeng

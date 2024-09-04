@@ -1,7 +1,8 @@
 package org.jeewx.api.wxstore.group;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.wxstore.group.model.Group;
@@ -9,9 +10,7 @@ import org.jeewx.api.wxstore.group.model.GroupDetailInfo;
 import org.jeewx.api.wxstore.group.model.GroupProductInfo;
 import org.jeewx.api.wxstore.group.model.GroupRtnInfo;
 
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.util.List;
 
 /**
  * 微信小店 - 分组
@@ -40,9 +39,9 @@ public class JwGroupManangerAPI {
 	public static GroupRtnInfo doAddGroupManager(String newAccessToken, Group group) {
 		if (newAccessToken != null) {
 			String requestUrl = create_group_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(group);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(group));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toBean(result, GroupRtnInfo.class);
+			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toJavaObject(result, GroupRtnInfo.class);
 			return groupRtnInfo;
 		}
 		return null;
@@ -58,7 +57,7 @@ public class JwGroupManangerAPI {
 			String requestUrl = del_group_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"group_id\": "+group_id+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toBean(result, GroupRtnInfo.class);
+			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toJavaObject(result, GroupRtnInfo.class);
 			return groupRtnInfo;
 		}
 		return null;
@@ -72,9 +71,9 @@ public class JwGroupManangerAPI {
 	public static GroupRtnInfo doUpdateGroupManagerProperties(String newAccessToken, Group group) {
 		if (newAccessToken != null) {
 			String requestUrl = update_group_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(group);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(group));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toBean(result, GroupRtnInfo.class);
+			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toJavaObject(result, GroupRtnInfo.class);
 			return groupRtnInfo;
 		}
 		return null;
@@ -88,9 +87,9 @@ public class JwGroupManangerAPI {
 	public static GroupRtnInfo doUpdateGroupManagerProduct(String newAccessToken, GroupProductInfo groupProductInfo) {
 		if (newAccessToken != null) {
 			String requestUrl = update_productmod_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(groupProductInfo);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(groupProductInfo));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toBean(result, GroupRtnInfo.class);
+			GroupRtnInfo groupRtnInfo = (GroupRtnInfo)JSONObject.toJavaObject(result, GroupRtnInfo.class);
 			return groupRtnInfo;
 		}
 		return null;
@@ -125,7 +124,7 @@ public class JwGroupManangerAPI {
 			// 正常返回
 			GroupDetailInfo groupDetailInfo = null;
 			JSONObject info = result.getJSONObject("group_detail");
-			groupDetailInfo = (GroupDetailInfo)JSONObject.toBean(info, GroupDetailInfo.class);
+			groupDetailInfo = (GroupDetailInfo)JSONObject.toJavaObject(info, GroupDetailInfo.class);
 			return groupDetailInfo;
 		}
 		return null;

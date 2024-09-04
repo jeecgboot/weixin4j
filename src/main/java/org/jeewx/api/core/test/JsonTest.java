@@ -1,13 +1,12 @@
 package org.jeewx.api.core.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
 import org.jeewx.api.core.req.model.kfaccount.KfcustomSend;
 import org.jeewx.api.core.req.model.kfaccount.MsgArticles;
 import org.jeewx.api.core.req.model.kfaccount.MsgNews;
 
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsonTest {
 
@@ -34,8 +33,7 @@ public class JsonTest {
 		n.setArticles(lst);
 		s.setNews(n);
 		
-		Gson gson = new Gson();
-		String json = gson.toJson(s);
+		String json = JSON.toJSONString(s);
 		System.out.println(json);
 	}
 }
