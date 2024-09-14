@@ -92,7 +92,7 @@ public class QywxTest {
     }
     
     public String getAccessToken() {
-        AccessToken accessToken = JwAccessTokenAPI.getAccessToken("wwda7ff292b81e8d1b", "L9jeo7CBIOmqTB1nodWh1E1BDmon-e5DLUIQj3OPgkc");
+        AccessToken accessToken = JwAccessTokenAPI.getAccessToken("wwda7ff292b81e8d1b", "??");
         return accessToken.getAccesstoken();
     }
 }

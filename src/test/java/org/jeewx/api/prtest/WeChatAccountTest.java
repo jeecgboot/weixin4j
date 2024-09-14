@@ -37,7 +37,7 @@ public class WeChatAccountTest {
 
     private static final org.slf4j.Logger log = LoggerFactory.getLogger(WeChatAccountTest.class);
     private static String appid = "wx9ad69ea024e8ee18";
-    private static String appscret = "63c9847203d87d8474792e63bfec4669";
+    private static String appscret = "??";
 
     //============= 获取粉丝 ===========================================
     /**
@@ -277,7 +277,7 @@ public class WeChatAccountTest {
     }
 
     public String getAccessTokenCx() {
-       return JdtBaseAPI.getAccessToken("wx8bf1a0e77c68b066","09c2d8ae3336b36d1a851bd4984ce262").getAccessToken();
+       return JdtBaseAPI.getAccessToken("wx8bf1a0e77c68b066","??").getAccessToken();
     }
 
 }

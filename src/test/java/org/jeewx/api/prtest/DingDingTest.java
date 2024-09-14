@@ -64,7 +64,7 @@ public class DingDingTest {
     }
     
     public String getAccessToken() {
-        AccessToken accessToken = JdtBaseAPI.getAccessToken("dingdbgpfnv56wtdpli9", "8wJHchpNq7VTgOrkVVixJaLmaBT6akB8tispdhLO31E-qLGDBuZAg1rGWZswplSo");
+        AccessToken accessToken = JdtBaseAPI.getAccessToken("dingdbgpfnv56wtdpli9", "??");
         return accessToken.getAccessToken();
     }
 }
