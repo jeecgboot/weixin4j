@@ -18,7 +18,10 @@ import org.jeewx.api.wxsendmsg.model.WxArticlesResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +35,7 @@ import java.util.List;
 public class JwMediaAPI {
 	private static Logger logger = LoggerFactory.getLogger(JwMediaAPI.class);
 	// 新增永久图文素材
-	private static String material_add_news_url ="https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=ACCESS_TOKEN";
+	private static String material_add_news_url ="https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=TYPE";
 	// 新增其他类型永久素材
 	private static String material_add_material_url = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=ACCESS_TOKEN";
 	// 获取永久素材
@@ -49,13 +52,14 @@ public class JwMediaAPI {
 	private static String material_del_news_url = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token=ACCESS_TOKEN";
 	
 	/**
-	 * 
+	 * 经测试该方法不可用
 	 * @param accessToke
 	 * @param type  媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
 	 * @param fileNamePath  上传的文件目录
 	 * @return
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxUpload uploadMedia(String accessToke,String type,String fileNamePath) throws WexinReqException{
 		UploadMedia uploadMedia = new UploadMedia();
 		uploadMedia.setAccess_token(accessToke);
@@ -77,6 +81,7 @@ public class JwMediaAPI {
 	 * @return
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxDwonload downMedia(String accessToke,String media_id,String filePath) throws WexinReqException{
 		DownloadMedia downloadMedia = new DownloadMedia();
 		downloadMedia.setAccess_token(accessToke);
@@ -115,6 +120,7 @@ public class JwMediaAPI {
 	 * @return WxArticlesResponse 上传图文消息素材返回结果
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxArticlesResponse uploadArticlesByMaterial(String accesstoken, List<WxArticle> wxArticles) throws WexinReqException {
 		WxArticlesResponse wxArticlesResponse = null;
 		if (wxArticles.size() == 0) {
@@ -199,6 +205,7 @@ public class JwMediaAPI {
 	 * @return WxArticlesResponse 上传图文消息素材返回结果
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxArticlesRespponseByMaterial getArticlesByMaterial(String accesstoken,String mediaId) throws WexinReqException {
 		WxArticlesRespponseByMaterial wxArticlesRespponseByMaterial = null;
 		
@@ -229,6 +236,7 @@ public class JwMediaAPI {
 	 * @return WxArticlesRespponseByMaterial 上传图文消息素材返回结果
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static void deleteArticlesByMaterial(String accesstoken,String mediaId) throws WexinReqException {
 			if (accesstoken != null&& !StringUtils.isEmpty(mediaId)) {
 				String requestUrl = material_get_material_url.replace("ACCESS_TOKEN", accesstoken);
@@ -251,6 +259,7 @@ public class JwMediaAPI {
 	 * @param wxUpdateArticle
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static void updateArticlesByMaterial(String accesstoken,WxUpdateArticle wxUpdateArticle) throws WexinReqException {
 		if (accesstoken != null) {
 			String requestUrl = material_update_news_url.replace("ACCESS_TOKEN", accesstoken);
@@ -272,6 +281,7 @@ public class JwMediaAPI {
 	 * @param WxNews
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxNews queryArticlesByMaterial(String accesstoken,String type,int offset,int count) throws WexinReqException {
 		WxNews wn = null;
 		if (accesstoken != null) {
@@ -299,6 +309,7 @@ public class JwMediaAPI {
 	 * @return
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static String getMediaIdByMaterial(String accesstoken, List<WxArticle> wxArticles) throws WexinReqException {
 
 		WxArticlesResponse response = uploadArticlesByMaterial(accesstoken, wxArticles);
@@ -317,6 +328,7 @@ public class JwMediaAPI {
 	 * @return
 	 * @throws Exception
 	 */
+	@Deprecated
 	public static WxMediaForMaterialResponse uploadMediaFileByMaterial(String accesstoken, WxMediaForMaterial wx) throws WexinReqException {
 		WxMediaForMaterialResponse mediaResource = null;
 		if (accesstoken != null) {
@@ -357,6 +369,7 @@ public class JwMediaAPI {
 	 * @return
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static String getMediaIdForMaterial(String accesstoken, WxMediaForMaterial wxMediaForMaterial) throws WexinReqException {
 
 		WxMediaForMaterialResponse response = uploadMediaFileByMaterial(accesstoken, wxMediaForMaterial);
@@ -375,6 +388,7 @@ public class JwMediaAPI {
 	 * @return
 	 * @throws WexinReqException
 	 */
+	@Deprecated
 	public static WxMediaForMaterialResponse addMediaFileByMaterialNews(String accesstoken, String type,String filePath,String fileName) throws WexinReqException {
 		WxMediaForMaterialResponse mediaResource = null;
 		if (accesstoken != null) {
@@ -401,34 +415,41 @@ public class JwMediaAPI {
 	}
 	
 	/**
-	 * 上传新增永久图文素材
+	 * 上传新增素材
 	 * 
 	 * @param accesstoken
 	 * @param wxArticles
-	 *            图文集合，数量不大于10
+	 *            图文集合，数量不大于100000
 	 * @return WxArticlesResponse 上传图文消息素材返回结果
 	 * @throws WexinReqException
 	 */
-	public static WxArticlesResponse uploadArticlesByMaterialNews(String accesstoken, List<WxArticle> wxArticles) throws WexinReqException {
+	public static WxArticlesResponse uploadArticlesByMaterialNews(String accesstoken, List<WxArticle> wxArticles,String type) throws WexinReqException {
 		WxArticlesResponse wxArticlesResponse = null;
 		if (wxArticles.size() == 0) {
 			logger.error("没有上传的图文消息");
-		} else if (wxArticles.size() > 10) {
-			logger.error("图文消息最多为10个图文");
 		} else {
 			if (accesstoken != null) {
-				String requestUrl = material_add_news_url.replace("ACCESS_TOKEN", accesstoken);
-				WxArticlesRequest wxArticlesRequest = new WxArticlesRequest();
-				wxArticlesRequest.setArticles(wxArticles);
-				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(wxArticlesRequest));
-				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-				if (result.containsKey("errcode")) {
-					logger.error("新增永久图文素材失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
-					throw new WexinReqException(result.getString("errcode"));
-				} else {
-					logger.info("=====新增永久图文素材成功=====result："+result.toString());
-					wxArticlesResponse = new WxArticlesResponse();
-					wxArticlesResponse.setMedia_id(result.getString("media_id"));
+				String requestUrl = material_add_news_url.replace("ACCESS_TOKEN", accesstoken).replace("TYPE",type);
+				for (WxArticle wxArticle : wxArticles) {
+                    try {
+						File media = new File(wxArticle.getFilePath());
+						String s = uploadPermanentMaterial(media, type, wxArticle.getTitle(), wxArticle.getContent(), requestUrl);
+						JSONObject jsonObject = JSONObject.parseObject(s);
+						if (jsonObject.containsKey("errcode")) {
+							logger.error("新增永久素材失败！errcode=" + jsonObject.getString("errcode") + ",errmsg = " + jsonObject.getString("errmsg"));
+							throw new WexinReqException(jsonObject.getString("errcode"));
+						} else {
+							logger.info("=====新增永久素材成功=====result："+jsonObject.toString());
+							wxArticlesResponse = new WxArticlesResponse();
+							wxArticlesResponse.setMedia_id(jsonObject.getString("media_id"));
+							//只有图片才会存在路径
+							if("image".equals(type)){
+							 	wxArticlesResponse.setUrl(jsonObject.getString("url"));
+							}
+						}
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
 				}
 			}
 		}
@@ -436,7 +457,7 @@ public class JwMediaAPI {
 	}
 	
 	/**
-	 * 修改永久素材
+	 * 修改永久素材 已下线
 	 * 
 	 * @param accesstoken
 	 * @param wxUpdateArticle
@@ -459,30 +480,38 @@ public class JwMediaAPI {
 	
 	/**
 	 * 获取永久素材  
-	 * 
+	 * 注意 新版本获取指定素材除了 video视频 其余图片、语音 返回的均为文件流。需要将url转成工作流来处理
 	 * @param accesstoken
-	 * @param wxArticles
-	 *            图文集合，数量不大于10
-	 * @return WxArticlesResponse 上传图文消息素材返回结果
+	 * @return WxArticlesResponse 
 	 * @throws WexinReqException
 	 */
-	public static List<WxNewsArticle> getArticlesByMaterialNews(String accesstoken,String mediaId) throws WexinReqException {
-		List<WxNewsArticle> wxArticleList = null;
+	public static WxNewsArticle getArticlesByMaterialNews(String accesstoken,String mediaId) throws WexinReqException {
+		    WxNewsArticle wxNewsArticle = new WxNewsArticle();
 			if (accesstoken != null) {
 				String requestUrl = material_get_material_url.replace("ACCESS_TOKEN", accesstoken);
 				JSONObject obj = new JSONObject();
 				obj.put("media_id", mediaId);
-				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-				if (result.containsKey("errcode")) {
+				String s = sendPost(requestUrl, obj.toJSONString());
+				if (s.contains("errcode")) {
+					JSONObject result = JSONObject.parseObject(s);
 					logger.error("获取永久素材 失败！errcode=" + result.getString("errcode") + ",errmsg = " + result.getString("errmsg"));
 					throw new WexinReqException(result.getString("errcode"));
 				} else {
-					logger.info("====获取永久素材成功====result:"+result.toString());
-					JSONArray newsItemJsonArr = result.getJSONArray("news_item");
-					wxArticleList = newsItemJsonArr.toJavaList(WxNewsArticle.class);
+					logger.info("====获取永久素材成功====result:"+ s);
+					if(s.contains("title")){
+						JSONObject jsonObject = JSONObject.parseObject(s);
+						String title = jsonObject.getString("title");
+						String downUrl = jsonObject.getString("down_url");
+						String description = jsonObject.getString("description");
+						wxNewsArticle.setTitle(title);
+						wxNewsArticle.setUrl(downUrl);
+						wxNewsArticle.setContent(description);
+					}else{
+						wxNewsArticle.setUrl(s);
+					}
 				}
 		}
-		return wxArticleList;
+		return wxNewsArticle;
 	}
 	
 	/**
@@ -516,10 +545,12 @@ public class JwMediaAPI {
 					JSONObject itemJson = JSONObject.parseObject(JSON.toJSONString(itemObj));
 					String mediaId = itemJson.getString("media_id");
 					Object newsItemObj = itemJson.get("content");
-					JSONObject newsItemJson = JSONObject.parseObject(JSON.toJSONString(newsItemObj));
-					JSONArray newsItemJsonArr = newsItemJson.getJSONArray("news_item");
-					List<WxNewsArticle> wxArticleList = newsItemJsonArr.toJavaList(WxNewsArticle.class);
-					wxItem.setContents(wxArticleList);
+					if(null != newsItemObj){
+						JSONObject newsItemJson = JSONObject.parseObject(JSON.toJSONString(newsItemObj));
+						JSONArray newsItemJsonArr = newsItemJson.getJSONArray("news_item");
+						List<WxNewsArticle> wxArticleList = newsItemJsonArr.toJavaList(WxNewsArticle.class);
+						wxItem.setContents(wxArticleList);
+					}
 					wxItem.setMedia_id(mediaId);
 					if(itemJson.containsKey("name")){
 						wxItem.setName("name");
@@ -557,4 +588,108 @@ public class JwMediaAPI {
 		}
 	}
 	//-- update-end--Author:gengjiajia  Date:2016-11-28 for:TASK #1583 【图文管理】重写管理永久素材的接口
+
+	/**
+	 * 上传永久素材
+	 * @param	file
+	 * @param	type
+	 * @param	title type为video时需要,其他类型设null
+	 * @param	introduction type为video时需要,其他类型设null
+	 * @return	{"media_id":MEDIA_ID,"url":URL}
+	 */
+	public static String uploadPermanentMaterial(File file, String type, String title, String introduction, String url) {
+		String result = null;
+		try {
+			URL uploadURL = new URL(url);
+
+			HttpURLConnection conn = (HttpURLConnection) uploadURL.openConnection();
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(30000);
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setUseCaches(false);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Connection", "Keep-Alive");
+			conn.setRequestProperty("Cache-Control", "no-cache");
+			String boundary = "-----------------------------" + System.currentTimeMillis();
+			conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+			OutputStream output = conn.getOutputStream();
+			output.write(("--" + boundary + "\r\n").getBytes());
+			output.write(String.format("Content-Disposition: form-data; name=\"media\"; filename=\"%s\"\r\n", file.getName()).getBytes());
+			output.write("Content-Type: video/mp4 \r\n\r\n".getBytes());
+			byte[] data = new byte[1024];
+			int len = 0;
+			FileInputStream input = new FileInputStream(file);
+			while ((len = input.read(data)) > -1) {
+				output.write(data, 0, len);
+			}
+			/*对类型为video的素材进行特殊处理*/
+			if ("video".equals(type)) {
+				output.write(("--" + boundary + "\r\n").getBytes());
+				output.write("Content-Disposition: form-data; name=\"description\";\r\n\r\n".getBytes());
+				output.write(String.format("{\"title\":\"%s\", \"introduction\":\"%s\"}", title, introduction).getBytes());
+			}
+			output.write(("\r\n--" + boundary + "--\r\n\r\n").getBytes());
+			output.flush();
+			output.close();
+			input.close();
+			InputStream resp = conn.getInputStream();
+			StringBuffer sb = new StringBuffer();
+			while ((len = resp.read(data)) > -1)
+				sb.append(new String(data, 0, len, "utf-8"));
+			resp.close();
+			result = sb.toString();
+		} catch (IOException e) {
+			logger.error(e.getMessage(),e);
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * 发送post请求 用于获取素材
+	 * @param url
+	 * @param param
+	 */
+	public static String sendPost(String url, String param) {
+		PrintWriter out = null;
+		BufferedReader in = null;
+		String result = "";
+
+		try {
+			URL realUrl = new URL(url);
+			URLConnection conn = realUrl.openConnection();
+			conn.setRequestProperty("accept", "*/*");
+			conn.setRequestProperty("connection", "Keep-Alive");
+			conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+			out.print(param);
+			out.flush();
+
+			String line;
+			for(in = new BufferedReader(new InputStreamReader(conn.getInputStream())); (line = in.readLine()) != null; result = result + line) {
+			}
+		} catch (Exception var16) {
+			System.out.println("发送 POST 请求出现异常！" + var16);
+			var16.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException var15) {
+				var15.printStackTrace();
+			}
+
+		}
+		logger.info("result:{}"+result);
+		return result;
+	}
 }

@@ -195,8 +195,8 @@ public class JwThirdAPI {
 			
 			ApiComponentToken apiComponentToken = new ApiComponentToken();
 			//apiComponentToken.setComponent_appid("wx5412820bba6f6bd6");
-			apiComponentToken.setComponent_appid("wx056ae5bc88c95c55");
-			apiComponentToken.setComponent_appsecret("0c79e1fa963cd80cc0be99b20a18faeb");
+			apiComponentToken.setComponent_appid("wx9ad69ea024e8ee18");
+			apiComponentToken.setComponent_appsecret("63c9847203d87d8474792e63bfec4669");
 			apiComponentToken.setComponent_verify_ticket(null);
 			String s = JwThirdAPI.getAccessToken(apiComponentToken);
 			System.out.println(s);
