@@ -77,7 +77,7 @@ public class JwTagAPI {
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
 				String tags = result.getString("tags");
-				JSONArray jsonArray = JSONArray.parseArray(JSON.toJSONString(tags));
+				JSONArray jsonArray = JSONArray.parseArray(tags);
 				list = jsonArray.toJavaList(WxTag.class);
 				return list;
 			}

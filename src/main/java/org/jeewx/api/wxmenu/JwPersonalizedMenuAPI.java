@@ -1,6 +1,7 @@
 package org.jeewx.api.wxmenu;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.req.model.menu.PersonalizedMenu;
@@ -86,11 +87,13 @@ public class JwPersonalizedMenuAPI {
 	public static List<WeixinButton> testMatchrule(String accessToken,String user_id){
 		if (accessToken != null) {
 			String requestUrl = test_matchrule.replace("ACCESS_TOKEN", accessToken);
-			String json = "{\"user_id\": "+user_id+"}";
+			String json = "{\"user_id\": \""+user_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
-				List<WeixinButton> btns = (List<WeixinButton>)JSONObject.toJavaObject(result, WeixinButton.class);
+				JSONObject menu = result.getJSONObject("menu");
+				JSONArray button = menu.getJSONArray("button");
+				List<WeixinButton> btns = (List<WeixinButton>)button.toJavaObject(List.class);
 				return btns;
 			}
 		}

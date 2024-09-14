@@ -92,9 +92,9 @@ public class JwMultiCustomerAPI {
             for(Iterator<CustService> it = custServices.iterator();it.hasNext();){
                 CustService custService = (CustService)it.next();
                 //不在线、没有开启自动接入或者自动接入已满,都返回不可用
+                //不再返回自动接入参数
                 if (custService != null && custService.getKfAccount().equals(kfAccount)
-                        && custService.getAutoAccept() > 0
-                        && custService.getAutoAccept()>custService.getAcceptedCase()){
+                        && custService.getStatus() > 0){
                     return true;
                 }
             }

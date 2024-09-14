@@ -5,17 +5,17 @@ import java.util.List;
 public class WeixinMenuMatchrule {
 
 	private String group_id;
-	
+	@Deprecated
 	private String sex;
-	
+	@Deprecated
 	private String country;
-	
+	@Deprecated
 	private String province;
-	
+	@Deprecated
 	private String city;
-	
+	@Deprecated
 	private String client_platform_type;
-	
+	@Deprecated
 	private String language;
 
 	public String getGroup_id() {

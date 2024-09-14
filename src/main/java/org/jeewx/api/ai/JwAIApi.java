@@ -29,18 +29,18 @@ public class JwAIApi {
 	/**
 	 * 提交语音
 	 */
-	public static final String ADD_VOICE_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/addvoicetorecofortext?";
+	public static final String ADD_VOICE_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/addvoicetorecofortext?";
 	
 	/**
 	 * 获取语音翻译结果
 	 */
-	public static final String VOICE_RESULT_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/queryrecoresultfortext?";
+	public static final String VOICE_RESULT_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/queryrecoresultfortext?";
 	
 	
 	/**
 	 * 翻译接口
 	 */
-	public static final String TRANSLATE_TEXT_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?";
+	public static final String TRANSLATE_TEXT_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?";
 
 	
 	/**
