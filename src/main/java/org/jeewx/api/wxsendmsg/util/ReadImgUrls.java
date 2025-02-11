@@ -67,7 +67,7 @@ public class ReadImgUrls {
 		String baseImageUrl = System.getProperty("user.dir");
 		String domainUrl = "http://www.jeewx.com/jeewx";
 		try {
-			String c = FileUtils.readFile("D:/workspace-JEECGONE/jeewx-api/src/main/java/org/jeewx/api/wxsendmsg/uploadimg/1.html");
+			String c = FileUtils.readFile("D:/workspace-JEECGONE/weixin4j/src/main/java/org/jeewx/api/wxsendmsg/uploadimg/1.html");
 			String[] urls = getImgs(c);
 			for(String url:urls){
 				System.out.println(url);
