@@ -16,15 +16,15 @@ weixin4j  | 微信和钉钉开发SDK
 
 
 
-项目介绍
+WeiXin4j 项目说明
 -----------------------------------
-weixin4j
+
 
 JAVA的微信和钉钉开发SDK封装，降低集成难度，让API变简单。
 支持微信公众号、小程序、微信企业号、钉钉、支付宝生活号和微博SDK。你可以基于她，快速的傻瓜化的进行微信开发、钉钉、支付窗和微博开发。
 
 * 	技术官网： www.jeecg.com
-* 	[反馈BUG发issue](https://github.com/jeecgboot/weixin4j/issues)
+* 	反馈bug或需求： [github发issue](https://github.com/jeecgboot/weixin4j/issues)
 
 weixin4j 快速集成
 -----------------------------------
