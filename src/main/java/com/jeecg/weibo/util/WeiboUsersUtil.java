@@ -1,7 +1,6 @@
 package com.jeecg.weibo.util;
 
-import org.apache.commons.lang.StringUtils;
-
+import com.alipay.api.internal.util.StringUtils;
 import com.jeecg.weibo.exception.BusinessException;
 
 public class WeiboUsersUtil {
@@ -17,7 +16,7 @@ public class WeiboUsersUtil {
 		if(StringUtils.isEmpty(uid)&&StringUtils.isEmpty(screen_name)){
 			throw new BusinessException("uid与screen_name二者不能全为空");
 		}
-		if(StringUtils.isNotEmpty(uid)&&StringUtils.isNotEmpty(screen_name)){
+		if(!StringUtils.isEmpty(uid)&&!StringUtils.isEmpty(screen_name)){
 			throw new BusinessException("uid与screen_name二者只能选其一");
 		}
 	}
@@ -28,13 +27,13 @@ public class WeiboUsersUtil {
 	public static String getShowUrl (String interUrl,String access_token,String uid,String screen_name){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(access_token)){
+		if(!StringUtils.isEmpty(access_token)){
 			requestUrl.append("&access_token="+access_token);
 		}
-		if(StringUtils.isNotEmpty(uid)){
+		if(!StringUtils.isEmpty(uid)){
 			requestUrl.append("&uid="+uid);
 		}
-		if(StringUtils.isNotEmpty(screen_name)){
+		if(!StringUtils.isEmpty(screen_name)){
 			requestUrl.append("&screen_name="+screen_name);
 		}
 		return requestUrl.toString();
@@ -64,10 +63,10 @@ public class WeiboUsersUtil {
 	public static String getCountsUrl (String interUrl,String access_token,String uids){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(access_token)){
+		if(!StringUtils.isEmpty(access_token)){
 			requestUrl.append("&access_token="+access_token);
 		}
-		if(StringUtils.isNotEmpty(uids)){
+		if(!StringUtils.isEmpty(uids)){
 			requestUrl.append("&uids="+uids);
 		}
 		return requestUrl.toString();

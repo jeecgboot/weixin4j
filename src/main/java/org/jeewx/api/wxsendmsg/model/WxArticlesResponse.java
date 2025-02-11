@@ -16,6 +16,8 @@ public class WxArticlesResponse {
 	private String media_id;
 	/** 媒体文件上传时间 */
 	private Date created_at;
+	/** 图片上传成功之后的路径 */
+	private String url;
 
 	public String getType() {
 		return type;
@@ -46,4 +48,11 @@ public class WxArticlesResponse {
 		return "WxArticlesResponse [type=" + type + ", media_id=" + media_id + ", created_at=" + created_at + "]";
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

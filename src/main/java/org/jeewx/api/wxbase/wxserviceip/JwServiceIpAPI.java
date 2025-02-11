@@ -1,15 +1,14 @@
 package org.jeewx.api.wxbase.wxserviceip;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.core.req.model.ServiceIP;
 import org.jeewx.api.core.util.WeiXinConstant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信--token信息

@@ -1,23 +1,14 @@
 package com.jeecg.qywx.api.core.util;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.internal.util.StringUtils;
 import com.jeecg.qywx.api.base.JwAccessTokenAPI;
 import com.jeecg.qywx.api.base.JwParamesAPI;
 import com.jeecg.qywx.api.core.common.AccessToken;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class WXUpload {
 	private static final String upload_wechat_url = "https://qyapi.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
@@ -154,10 +145,10 @@ public class WXUpload {
 	public static void writeFile(byte[] data, String dir, String filename,
 			boolean cover) {
 		try {
-			if (StringUtils.isBlank(dir)) {
+			if (StringUtils.isEmpty(dir)) {
 				throw new Exception("目录不能为空");
 			}
-			if (StringUtils.isBlank(filename)) {
+			if (StringUtils.isEmpty(filename)) {
 				throw new Exception("文件名称不能为空");
 			}
 			File dirfile = new File(dir);

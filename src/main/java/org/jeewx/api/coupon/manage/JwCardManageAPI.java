@@ -1,15 +1,8 @@
 package org.jeewx.api.coupon.manage;
 
-import net.sf.json.JSONObject;
-
-import org.jeewx.api.coupon.manage.model.BatchGetCardRtnInfo;
-import org.jeewx.api.coupon.manage.model.CardUpdate;
-import org.jeewx.api.coupon.manage.model.CommCardRtnInfo;
-import org.jeewx.api.coupon.manage.model.DelRtnInfo;
-import org.jeewx.api.coupon.manage.model.GetCardDetailRtnInfo;
-import org.jeewx.api.coupon.manage.model.GetCardRtnInfo;
-import org.jeewx.api.core.common.AccessToken;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
+import org.jeewx.api.coupon.manage.model.*;
 
 
 /**
@@ -43,7 +36,7 @@ public class JwCardManageAPI {
 			String requestUrl = del_card_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"card_id\": \""+card_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			DelRtnInfo delRtnInfo = (DelRtnInfo)JSONObject.toBean(result, DelRtnInfo.class);
+			DelRtnInfo delRtnInfo = (DelRtnInfo)JSONObject.toJavaObject(result, DelRtnInfo.class);
 			return delRtnInfo;
 		}
 		return null;
@@ -57,7 +50,7 @@ public class JwCardManageAPI {
 			String requestUrl = get_card_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = emptyStrJson("code",code,"card_id",card_id);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			GetCardRtnInfo getCardRtnInfo = (GetCardRtnInfo)JSONObject.toBean(result, GetCardRtnInfo.class);
+			GetCardRtnInfo getCardRtnInfo = (GetCardRtnInfo)JSONObject.toJavaObject(result, GetCardRtnInfo.class);
 			return getCardRtnInfo;
 		}
 		return null;
@@ -72,7 +65,7 @@ public class JwCardManageAPI {
 			String requestUrl = batchget_card_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"offset\":"+offset+",\"count\": "+count+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			BatchGetCardRtnInfo batchGetCardRtnInfo = (BatchGetCardRtnInfo)JSONObject.toBean(result, BatchGetCardRtnInfo.class);
+			BatchGetCardRtnInfo batchGetCardRtnInfo = (BatchGetCardRtnInfo)JSONObject.toJavaObject(result, BatchGetCardRtnInfo.class);
 			return batchGetCardRtnInfo;
 		}
 		return null;
@@ -85,7 +78,7 @@ public class JwCardManageAPI {
 			String requestUrl = get_card_detail_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"card_id\":\""+card_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			GetCardDetailRtnInfo getCardDetailRtnInfo = (GetCardDetailRtnInfo)JSONObject.toBean(result, GetCardDetailRtnInfo.class);
+			GetCardDetailRtnInfo getCardDetailRtnInfo = (GetCardDetailRtnInfo)JSONObject.toJavaObject(result, GetCardDetailRtnInfo.class);
 			return getCardDetailRtnInfo;
 		}
 		return null;
@@ -104,7 +97,7 @@ public class JwCardManageAPI {
 			String requestUrl = update_code_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = emptyStrJson("code",code,"card_id",card_id,"new_code",new_code);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toBean(result, CommCardRtnInfo.class);
+			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toJavaObject(result, CommCardRtnInfo.class);
 			return commCardRtnInfo;
 		}
 		return null;
@@ -121,7 +114,7 @@ public class JwCardManageAPI {
 			String requestUrl = unavailable_code_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = emptyStrJson("code",code,"card_id",card_id);
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toBean(result, CommCardRtnInfo.class);
+			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toJavaObject(result, CommCardRtnInfo.class);
 			return commCardRtnInfo;
 		}
 		return null;
@@ -136,10 +129,10 @@ public class JwCardManageAPI {
 	public static  CommCardRtnInfo doUpdateCard(String newAccessToken,CardUpdate cardUpdate) {
 		if (newAccessToken != null) {
 			String requestUrl = update_card_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(cardUpdate);
+			JSONObject obj = JSONObject.parseObject(JSONObject.toJSONString(cardUpdate));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST",
 					obj.toString());
-			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toBean(result, CommCardRtnInfo.class);
+			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toJavaObject(result, CommCardRtnInfo.class);
 			return commCardRtnInfo;
 		}
 		return null;
@@ -156,7 +149,7 @@ public class JwCardManageAPI {
 			String requestUrl = modifystock_card_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"card_id\":\""+card_id+"\",\"increase_stock_value\": "+increase_stock_value+",\"reduce_stock_value\": "+reduce_stock_value+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toBean(result, CommCardRtnInfo.class);
+			CommCardRtnInfo commCardRtnInfo = (CommCardRtnInfo)JSONObject.toJavaObject(result, CommCardRtnInfo.class);
 			return commCardRtnInfo;
 		}
 		return null;

@@ -1,9 +1,8 @@
 package org.jeewx.api.wxuser.tag;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.util.WeiXinConstant;
@@ -13,8 +12,9 @@ import org.jeewx.api.wxuser.tag.model.WxTagUserList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class JwTagAPI {
 	
@@ -50,7 +50,7 @@ public class JwTagAPI {
 	 * @return
 	 * @throws WexinReqException
 	 */
-	public static JSONObject createTag(String accessToken,String tagName) throws WexinReqException{
+	public static JSONObject createTag(String accessToken, String tagName) throws WexinReqException{
 		JSONObject result = null;
 		if (accessToken != null) {
 			String requestUrl = create_tag.replace("ACCESS_TOKEN", accessToken);
@@ -77,8 +77,8 @@ public class JwTagAPI {
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
 				String tags = result.getString("tags");
-				JSONArray jsonArray = JSONArray.fromObject(tags);
-				list = JSONArray.toList(jsonArray, WxTag.class);
+				JSONArray jsonArray = JSONArray.parseArray(tags);
+				list = jsonArray.toJavaList(WxTag.class);
 				return list;
 			}
 			logger.info("获取标签方法执行后json参数 : "+result.toString());
@@ -135,7 +135,7 @@ public class JwTagAPI {
 				Map<String,Object> data = new HashMap<String,Object>();
 				data.put("tagid", tagid);
 				data.put("next_openid", next_openid);
-				JSONObject obj = JSONObject.fromObject(data);
+				JSONObject obj = JSONObject.parseObject(JSON.toJSONString(data));
 				logger.info("获取标签下粉丝列表方法执行前json参数---obj: "+obj.toString());
 				JSONObject result = WxstoreUtils.httpRequest(requestUrl, "GET", obj.toString());
 				Integer error = (Integer) result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
@@ -150,7 +150,7 @@ public class JwTagAPI {
 					tagUser.setCount(count);
 					tagUser.setData(users);
 					tagUser.setNext_openid(nextOpenid);*/
-					tagUser  = (WxTagUser) JSONObject.toBean(result, WxTagUser.class);
+					tagUser  = (WxTagUser) JSONObject.toJavaObject(result, WxTagUser.class);
 				}
 				logger.info("获取标签下粉丝列表方法执行后json参数 : "+result.toString());
 			}
@@ -170,7 +170,7 @@ public class JwTagAPI {
 			Map<String,Object> data = new HashMap<String,Object>();
 			data.put("openid_list", openid_list);
 			data.put("tagid", tagid);
-			JSONObject obj = JSONObject.fromObject(data);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(data));
 			logger.info("批量为用户打标签 方法执行前json参数---obj: "+obj.toString());
 			result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			logger.info("批量为用户打标签 方法执行后json参数 : "+result.toString());
@@ -188,7 +188,7 @@ public class JwTagAPI {
 			Map<String,Object> data = new HashMap<String,Object>();
 			data.put("openid_list", openid_list);
 			data.put("tagid", tagid);
-			JSONObject obj = JSONObject.fromObject(data);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(data));
 			logger.info("批量为用户取消标签 方法执行前json参数---obj: "+obj.toString());
 			result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			logger.info("批量为用户取消标签 方法执行后json参数 : "+result.toString());
@@ -205,13 +205,13 @@ public class JwTagAPI {
 			String requestUrl = getidlist.replace("ACCESS_TOKEN", accessToken);
 			Map<String,Object> data = new HashMap<String,Object>();
 			data.put("openid", openid);
-			JSONObject obj = JSONObject.fromObject(data);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(data));
 			logger.info("获取用户身上的标签列表 方法执行前json参数---obj: "+obj.toString());
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
 				JSONArray jsonArray = result.getJSONArray("tagid_list");
-				list = JSONArray.toList(jsonArray, Integer.class);
+				list = jsonArray.toJavaList(Integer.class);
 			}
 			logger.info("获取用户身上的标签列表 方法执行后json参数 : "+result.toString());
 		}

@@ -1,14 +1,8 @@
 package org.jeewx.api.wxshop;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
@@ -17,6 +11,12 @@ import org.jeewx.api.wxshop.model.Business;
 import org.jeewx.api.wxshop.model.BusinessReq;
 import org.jeewx.api.wxshop.model.PoiId;
 import org.jeewx.api.wxshop.model.ShopRtnInfo;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 
 /**
@@ -61,9 +61,9 @@ public class JwShopAPI {
 	public static ShopRtnInfo doAddshop(String newAccessToken, Business business) {
 		if (newAccessToken != null) {
 			String requestUrl = create_shop_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(business);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(business));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toBean(result, ShopRtnInfo.class);
+			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toJavaObject(result, ShopRtnInfo.class);
 			return shopRtnInfo;
 		}
 		return null;
@@ -75,9 +75,9 @@ public class JwShopAPI {
 	public static ShopRtnInfo updateShop(String newAccessToken,  Business business) {
 		if (newAccessToken != null) {
 			String requestUrl  = updatebystatus_shop_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(business);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(business));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toBean(result, ShopRtnInfo.class);
+			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toJavaObject(result, ShopRtnInfo.class);
 			return shopRtnInfo;
 		}
 		return null;
@@ -89,9 +89,9 @@ public class JwShopAPI {
 	public static ShopRtnInfo delShop(String newAccessToken,  PoiId poiId) {
 		if (newAccessToken != null) {
 			String requestUrl  = del_shop_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(poiId);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(poiId));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toBean(result, ShopRtnInfo.class);
+			ShopRtnInfo shopRtnInfo = (ShopRtnInfo)JSONObject.toJavaObject(result, ShopRtnInfo.class);
 			return shopRtnInfo;
 		}
 		return null;
@@ -104,11 +104,11 @@ public class JwShopAPI {
 	public static BaseInfo getshop(String newAccessToken, PoiId poiId) {
 		if (newAccessToken != null) {
 			String requestUrl = get_shop_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(poiId);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(poiId));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			JSONObject info = result.getJSONObject("business");
 			BaseInfo baseInfo = null;
-			baseInfo = (BaseInfo)JSONObject.toBean(info, BaseInfo.class);
+			baseInfo = (BaseInfo)JSONObject.toJavaObject(info, BaseInfo.class);
 			return baseInfo;
 		}
 		return null;
@@ -120,7 +120,7 @@ public class JwShopAPI {
 	public static List<BaseInfo> getshops(String newAccessToken, BusinessReq businessReq) {
 		if (newAccessToken != null) {
 			String requestUrl = search_shop_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(businessReq);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(businessReq));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			// 正常返回
 			List<BaseInfo> baseInfos = null;
@@ -147,7 +147,7 @@ public class JwShopAPI {
 			try {
 				fileByte = fileData(filePath+fileName);
 				JSONObject result = WxstoreUtils.httpRequest2(requestUrl, "POST", fileByte);
-				if (result.getInt("errcode") == 0) {
+				if (result.getInteger("errcode") == 0) {
 					return result.getString("url");
 				}
 				return "";

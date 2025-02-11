@@ -1,15 +1,15 @@
 package org.jeewx.api.wxstore.shelf;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.wxstore.shelf.model.Shelf;
 import org.jeewx.api.wxstore.shelf.model.ShelfRInfo;
 import org.jeewx.api.wxstore.shelf.model.ShelfRtnInfo;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.util.List;
 
 
 
@@ -44,9 +44,9 @@ public class JwShelfAPI {
 	public static ShelfRtnInfo doAddExpress(String newAccessToken, Shelf shelf) {
 		if (newAccessToken != null) {
 			String requestUrl = create_shelf_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(shelf);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(shelf));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toBean(result, ShelfRtnInfo.class);
+			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toJavaObject(result, ShelfRtnInfo.class);
 			return shelfRtnInfo;
 		}
 		return null;
@@ -60,9 +60,9 @@ public class JwShelfAPI {
 	public static ShelfRtnInfo doUpdateExpress(String newAccessToken, Shelf shelf) {
 		if (newAccessToken != null) {
 			String requestUrl = update_shelf_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(shelf);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(shelf));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toBean(result, ShelfRtnInfo.class);
+			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toJavaObject(result, ShelfRtnInfo.class);
 			return shelfRtnInfo;
 		}
 		return null;
@@ -78,7 +78,7 @@ public class JwShelfAPI {
 			String requestUrl = del_shelf_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"shelf_id\": "+shelf_id+"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toBean(result, ShelfRtnInfo.class);
+			ShelfRtnInfo shelfRtnInfo = (ShelfRtnInfo)JSONObject.toJavaObject(result, ShelfRtnInfo.class);
 			return shelfRtnInfo;
 		}
 		return null;
@@ -96,7 +96,7 @@ public class JwShelfAPI {
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
 			// 正常返回
 			ShelfRInfo shelfRInfo = null;
-			shelfRInfo = (ShelfRInfo)JSONObject.toBean(result, ShelfRInfo.class);
+			shelfRInfo = (ShelfRInfo)JSONObject.toJavaObject(result, ShelfRInfo.class);
 			return shelfRInfo;
 		}
 		return null;

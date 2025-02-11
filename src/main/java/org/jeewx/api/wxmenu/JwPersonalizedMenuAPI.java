@@ -1,16 +1,16 @@
 package org.jeewx.api.wxmenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
-import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.model.menu.PersonalizedMenu;
 import org.jeewx.api.core.req.model.menu.WeixinButton;
 import org.jeewx.api.core.req.model.menu.WeixinMenuMatchrule;
 import org.jeewx.api.core.util.WeiXinConstant;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信个性化菜单--menu
@@ -50,7 +50,7 @@ public class JwPersonalizedMenuAPI {
 		String msg = "";
 		if (accessToken != null) {
 			String requestUrl = create_menu.replace("ACCESS_TOKEN", accessToken);
-			JSONObject obj = JSONObject.fromObject(menu);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(menu));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
@@ -87,11 +87,13 @@ public class JwPersonalizedMenuAPI {
 	public static List<WeixinButton> testMatchrule(String accessToken,String user_id){
 		if (accessToken != null) {
 			String requestUrl = test_matchrule.replace("ACCESS_TOKEN", accessToken);
-			String json = "{\"user_id\": "+user_id+"}";
+			String json = "{\"user_id\": \""+user_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);
 			if(error == null){
-				List<WeixinButton> btns = (List<WeixinButton>)JSONObject.toBean(result, WeixinButton.class);
+				JSONObject menu = result.getJSONObject("menu");
+				JSONArray button = menu.getJSONArray("button");
+				List<WeixinButton> btns = (List<WeixinButton>)button.toJavaObject(List.class);
 				return btns;
 			}
 		}

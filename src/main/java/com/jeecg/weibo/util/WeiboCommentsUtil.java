@@ -1,7 +1,6 @@
 package com.jeecg.weibo.util;
 
-import org.apache.commons.lang.StringUtils;
-
+import com.alipay.api.internal.util.StringUtils;
 import com.jeecg.weibo.dto.WeiBoMentionsDto;
 import com.jeecg.weibo.exception.BusinessException;
 
@@ -23,22 +22,22 @@ public class WeiboCommentsUtil {
 	public static String getBymeUrl (String interUrl,WeiBoMentionsDto mentions){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(mentions.getAccess_token())){
+		if(!StringUtils.isEmpty(mentions.getAccess_token())){
 			requestUrl.append("&access_token="+mentions.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(mentions.getSince_id())){
+		if(!StringUtils.isEmpty(mentions.getSince_id())){
 			requestUrl.append("&since_id="+mentions.getSince_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getMax_id())){
+		if(!StringUtils.isEmpty(mentions.getMax_id())){
 			requestUrl.append("&max_id="+mentions.getMax_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getCount())){
+		if(!StringUtils.isEmpty(mentions.getCount())){
 			requestUrl.append("&count="+mentions.getCount());
 		}
-		if(StringUtils.isNotEmpty(mentions.getPage())){
+		if(!StringUtils.isEmpty(mentions.getPage())){
 			requestUrl.append("&page="+mentions.getPage());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_source())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_source())){
 			requestUrl.append("&filter_by_source="+mentions.getFilter_by_source());
 		}
 		return requestUrl.toString();
@@ -50,25 +49,25 @@ public class WeiboCommentsUtil {
 	public static String getTomeUrl (String interUrl,WeiBoMentionsDto mentions){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(mentions.getAccess_token())){
+		if(!StringUtils.isEmpty(mentions.getAccess_token())){
 			requestUrl.append("&access_token="+mentions.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(mentions.getSince_id())){
+		if(!StringUtils.isEmpty(mentions.getSince_id())){
 			requestUrl.append("&since_id="+mentions.getSince_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getMax_id())){
+		if(!StringUtils.isEmpty(mentions.getMax_id())){
 			requestUrl.append("&max_id="+mentions.getMax_id());
 		}
-		if(StringUtils.isNotEmpty(mentions.getCount())){
+		if(!StringUtils.isEmpty(mentions.getCount())){
 			requestUrl.append("&count="+mentions.getCount());
 		}
-		if(StringUtils.isNotEmpty(mentions.getPage())){
+		if(!StringUtils.isEmpty(mentions.getPage())){
 			requestUrl.append("&page="+mentions.getPage());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_author())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_author())){
 			requestUrl.append("&filter_by_author="+mentions.getFilter_by_author());
 		}
-		if(StringUtils.isNotEmpty(mentions.getFilter_by_source())){
+		if(!StringUtils.isEmpty(mentions.getFilter_by_source())){
 			requestUrl.append("&filter_by_source="+mentions.getFilter_by_source());
 		}
 		return requestUrl.toString();

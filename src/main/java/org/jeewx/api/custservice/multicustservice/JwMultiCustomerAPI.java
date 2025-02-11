@@ -1,16 +1,15 @@
 package org.jeewx.api.custservice.multicustservice;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.custservice.multicustservice.model.ChatRecord;
 import org.jeewx.api.custservice.multicustservice.model.CustService;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 客户服务- 多客户
@@ -93,9 +92,9 @@ public class JwMultiCustomerAPI {
             for(Iterator<CustService> it = custServices.iterator();it.hasNext();){
                 CustService custService = (CustService)it.next();
                 //不在线、没有开启自动接入或者自动接入已满,都返回不可用
+                //不再返回自动接入参数
                 if (custService != null && custService.getKfAccount().equals(kfAccount)
-                        && custService.getAutoAccept() > 0
-                        && custService.getAutoAccept()>custService.getAcceptedCase()){
+                        && custService.getStatus() > 0){
                     return true;
                 }
             }

@@ -2,7 +2,7 @@ package com.jeecg.weibo.util;
 
 import java.net.URLEncoder;
 
-import org.apache.commons.lang.StringUtils;
+import com.alipay.api.internal.util.StringUtils;
 
 import com.jeecg.weibo.dto.WeiboSendDto;
 import com.jeecg.weibo.exception.BusinessException;
@@ -29,13 +29,13 @@ public class WeiboSendUtil {
 	public static String getSendUrl (String interUrl,WeiboSendDto send){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(send.getAccess_token())){
+		if(!StringUtils.isEmpty(send.getAccess_token())){
 			requestUrl.append("&access_token="+send.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(send.getStatus())){
+		if(!StringUtils.isEmpty(send.getStatus())){
 			requestUrl.append("&status="+send.getStatus());
 		}
-		if(StringUtils.isNotEmpty(send.getUrl())){
+		if(!StringUtils.isEmpty(send.getUrl())){
 			String url = URLEncoder.encode(send.getUrl());
 			requestUrl.append("&url="+url);
 		}
@@ -55,10 +55,10 @@ public class WeiboSendUtil {
 	public static String getDelUrl (String interUrl,WeiboSendDto send){
 		StringBuilder requestUrl=new StringBuilder();
 		requestUrl.append(interUrl);
-		if(StringUtils.isNotEmpty(send.getAccess_token())){
+		if(!StringUtils.isEmpty(send.getAccess_token())){
 			requestUrl.append("&access_token="+send.getAccess_token());
 		}
-		if(StringUtils.isNotEmpty(send.getId())){
+		if(!StringUtils.isEmpty(send.getId())){
 			requestUrl.append("&id="+send.getId());
 		}
 		return requestUrl.toString();

@@ -1,25 +1,17 @@
 package org.jeewx.api.wxsendmsg;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
-import org.jeewx.api.core.req.model.kfaccount.KfOnlineAccountList;
-import org.jeewx.api.core.req.model.kfaccount.KfaccountAdd;
-import org.jeewx.api.core.req.model.kfaccount.KfaccountDel;
-import org.jeewx.api.core.req.model.kfaccount.KfaccountList;
-import org.jeewx.api.core.req.model.kfaccount.KfaccountUpdate;
-import org.jeewx.api.core.req.model.kfaccount.KfaccountUploadheadimg;
-import org.jeewx.api.core.req.model.kfaccount.KfcustomSend;
+import org.jeewx.api.core.req.model.kfaccount.*;
 import org.jeewx.api.core.util.WeiXinConstant;
-import org.jeewx.api.wxbase.wxtoken.JwTokenAPI;
 import org.jeewx.api.wxsendmsg.model.WxKfaccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信客服管理处理
@@ -132,7 +124,7 @@ public class JwKfaccountAPI {
 		lstWxKfaccount = new ArrayList<WxKfaccount>();
 		WxKfaccount kfaccount = null;
 		for(int i = 0; i < kf_list.size() ; i++){
-			kfaccount = (WxKfaccount) JSONObject.toBean( kf_list.getJSONObject(i), WxKfaccount.class);
+			kfaccount = (WxKfaccount) JSONObject.toJavaObject( kf_list.getJSONObject(i), WxKfaccount.class);
 			lstWxKfaccount.add(kfaccount);
 		}
 		return lstWxKfaccount;
@@ -181,7 +173,7 @@ public class JwKfaccountAPI {
 		lstWxKfaccount = new ArrayList<WxKfaccount>();
 		WxKfaccount kfaccount = null;
 		for (int i = 0; i < kf_list.size(); i++) {
-			kfaccount = (WxKfaccount) JSONObject.toBean(
+			kfaccount = (WxKfaccount) JSONObject.toJavaObject(
 					kf_list.getJSONObject(i), WxKfaccount.class);
 			lstWxKfaccount.add(kfaccount);
 		}

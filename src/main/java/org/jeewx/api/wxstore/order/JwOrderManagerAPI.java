@@ -1,7 +1,8 @@
 package org.jeewx.api.wxstore.order;
 
-import java.util.List;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.JSONHelper;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.wxstore.order.model.OrderDelivery;
@@ -9,8 +10,7 @@ import org.jeewx.api.wxstore.order.model.OrderInfo;
 import org.jeewx.api.wxstore.order.model.OrderPara;
 import org.jeewx.api.wxstore.order.model.OrderRtnInfo;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import java.util.List;
 
 
 /**
@@ -41,7 +41,7 @@ public class JwOrderManagerAPI {
 			// 正常返回
 			OrderInfo orderInfo = null;
 			JSONObject info = result.getJSONObject("order");
-			orderInfo = (OrderInfo)JSONObject.toBean(info, OrderInfo.class);
+			orderInfo = (OrderInfo)JSONObject.toJavaObject(info, OrderInfo.class);
 			return orderInfo;
 		}
 		return null;
@@ -55,7 +55,7 @@ public class JwOrderManagerAPI {
 	public static List<OrderInfo> getByFilter(String newAccessToken, OrderPara orderPara) {
 		if (newAccessToken != null) {
 			String requestUrl = getfilter_order_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(orderPara);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(orderPara));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "GET", obj.toString());
 			// 正常返回
 			List<OrderInfo> orderInfos = null;
@@ -74,9 +74,9 @@ public class JwOrderManagerAPI {
 	public static OrderRtnInfo doDelivery(String newAccessToken, OrderDelivery orderDelivery) {
 		if (newAccessToken != null) {
 			String requestUrl = setdelivery_order_url.replace("ACCESS_TOKEN", newAccessToken);
-			JSONObject obj = JSONObject.fromObject(orderDelivery);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(orderDelivery));
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
-			OrderRtnInfo orderRtnInfo = (OrderRtnInfo)JSONObject.toBean(result, OrderRtnInfo.class);
+			OrderRtnInfo orderRtnInfo = (OrderRtnInfo)JSONObject.toJavaObject(result, OrderRtnInfo.class);
 			return orderRtnInfo;
 		}
 		return null;
@@ -92,7 +92,7 @@ public class JwOrderManagerAPI {
 			String requestUrl = close_order_url.replace("ACCESS_TOKEN", newAccessToken);
 			String json = "{\"order_id\": \""+order_id+"\"}";
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", json);
-			OrderRtnInfo orderRtnInfo = (OrderRtnInfo)JSONObject.toBean(result, OrderRtnInfo.class);
+			OrderRtnInfo orderRtnInfo = (OrderRtnInfo)JSONObject.toJavaObject(result, OrderRtnInfo.class);
 			return orderRtnInfo;
 		}
 		return null;

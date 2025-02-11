@@ -12,12 +12,11 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.ai.model.Voice;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.json.JSONObject;
 
 /**
  * 微信--AI开放接口
@@ -30,18 +29,18 @@ public class JwAIApi {
 	/**
 	 * 提交语音
 	 */
-	public static final String ADD_VOICE_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/addvoicetorecofortext?";
+	public static final String ADD_VOICE_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/addvoicetorecofortext?";
 	
 	/**
 	 * 获取语音翻译结果
 	 */
-	public static final String VOICE_RESULT_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/queryrecoresultfortext?";
+	public static final String VOICE_RESULT_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/queryrecoresultfortext?";
 	
 	
 	/**
 	 * 翻译接口
 	 */
-	public static final String TRANSLATE_TEXT_URL = "http://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?";
+	public static final String TRANSLATE_TEXT_URL = "https://api.weixin.qq.com/cgi-bin/media/voice/translatecontent?";
 
 	
 	/**
@@ -174,7 +173,7 @@ public class JwAIApi {
 			        	reader.close();  
 			        }  
 				}
-			    jsonobject = JSONObject.fromObject(result); 
+			    jsonobject = JSONObject.parseObject(result);
 			} catch (Exception e) {
 				logger.info(e.getMessage());
 				e.printStackTrace();
@@ -266,7 +265,7 @@ public class JwAIApi {
 			httpUrlConn.disconnect();
 			logger.info(buffer.toString());
 			//jsonObject = JSONObject.parseObject(buffer.toString());
-			jsonObject = JSONObject.fromObject(buffer.toString());
+			jsonObject = JSONObject.parseObject(buffer.toString());
 		} catch (ConnectException ce) {
 			ce.printStackTrace();
 			logger

@@ -1,11 +1,7 @@
 package org.jeewx.api.wxuser.user;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;
@@ -13,6 +9,9 @@ import org.jeewx.api.core.req.model.user.UserInfoListGet;
 import org.jeewx.api.wxuser.user.model.Wxuser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 微信--用户
@@ -41,7 +40,7 @@ public class JwUserAPI {
 			// 正常返回
 			Wxuser wxuser = null;
 			Object error = result.get("errcode");
-			wxuser = (Wxuser) JSONObject.toBean(result, Wxuser.class);
+			wxuser = (Wxuser) JSONObject.toJavaObject(result, Wxuser.class);
 			return wxuser;
 		}
 		return null;
@@ -62,8 +61,8 @@ public class JwUserAPI {
 			Object error = result.get("errcode");
 			List<Wxuser> lstUser = null;
 			Wxuser mxuser = null;
-			int total = result.getInt("total");
-			int count = result.getInt("count");
+			int total = result.getInteger("total");
+			int count = result.getInteger("count");
 			String strNextOpenId = result.getString("next_openid");
 			JSONObject data = result.getJSONObject("data");
 			lstUser = new ArrayList<Wxuser>(total);

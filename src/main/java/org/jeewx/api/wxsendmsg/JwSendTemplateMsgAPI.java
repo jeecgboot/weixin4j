@@ -1,13 +1,13 @@
 package org.jeewx.api.wxsendmsg;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.model.message.TemplateMessageSendResult;
 import org.jeewx.api.core.util.WeiXinConstant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import net.sf.json.JSONObject;
 
 /**
  * 模板消息接口
@@ -167,7 +167,7 @@ public class JwSendTemplateMsgAPI {
 		String msg = "";
 		if (accessToken != null) {
 			String requestUrl = send_template_msg.replace("ACCESS_TOKEN", accessToken);
-			JSONObject obj = JSONObject.fromObject(msgSend);
+			JSONObject obj = JSONObject.parseObject(JSON.toJSONString(msgSend));
 			logger.info("发送模板消息方法执行前json参数 :{obj :" + obj.toString() + "}");
 			JSONObject result = WxstoreUtils.httpRequest(requestUrl, "POST", obj.toString());
 			Object error = result.get(WeiXinConstant.RETURN_ERROR_INFO_CODE);

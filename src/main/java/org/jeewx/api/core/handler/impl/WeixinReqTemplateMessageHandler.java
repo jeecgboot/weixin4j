@@ -1,8 +1,6 @@
 package org.jeewx.api.core.handler.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
 import org.jeewx.api.core.annotation.ReqType;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.handler.WeiXinReqHandler;
@@ -15,7 +13,8 @@ import org.jeewx.api.core.util.WeiXinReqUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 模板消息发送
@@ -56,33 +55,32 @@ public class WeixinReqTemplateMessageHandler implements WeiXinReqHandler {
 	 */
 	private  String getMsgJson(IndustryTemplateMessageSend mc){
 		StringBuffer json = new StringBuffer();
-		Gson gson = new Gson();
 		TemplateMessage tm = mc.getData();
 		mc.setData(null);
-		String objJson = gson.toJson(mc);
+		String objJson = JSON.toJSONString(mc);
 		mc.setData(tm);
 		json.append(objJson);
 		json.setLength(json.length()-1);
 		json.append(",");
 		json.append("\"data\":{");
 		
-		objJson = gson.toJson(tm.getFirst());
+		objJson = JSON.toJSONString(tm.getFirst());
 		json.append(" \"first\":");
 		json.append(objJson);
 		json.append(",");
-		objJson = gson.toJson(tm.getKeynote1());
+		objJson = JSON.toJSONString(tm.getKeynote1());
 		json.append(" \"keynote1\":");
 		json.append(objJson);
 		json.append(",");
-		objJson = gson.toJson(tm.getKeynote2());
+		objJson = JSON.toJSONString(tm.getKeynote2());
 		json.append(" \"keynote2\":");
 		json.append(objJson);
 		json.append(",");
-		objJson = gson.toJson(tm.getKeynote3());
+		objJson = JSON.toJSONString(tm.getKeynote3());
 		json.append(" \"keynote3\":");
 		json.append(objJson);
 		json.append(",");
-		objJson = gson.toJson(tm.getRemark());
+		objJson = JSON.toJSONString(tm.getRemark());
 		json.append(" \"remark\":");
 		json.append(objJson);
 		json.append("}}");
