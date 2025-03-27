@@ -2,7 +2,7 @@ weixin4j  | 微信和钉钉开发SDK
 ===============
 
   
-最新版本： 2.0.0（发布日期：2025-02-11）
+最新版本： 2.0.1（发布日期：2025-03-27）
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-北京国炬软件-orange.svg)](http://jeecg.com/aboutusIndex)
