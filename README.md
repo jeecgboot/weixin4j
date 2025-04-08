@@ -2,12 +2,12 @@ weixin4j  | 微信和钉钉开发SDK
 ===============
 
   
-最新版本： 2.0.1（发布日期：2025-03-27）
+最新版本： 2.0.2（发布日期：2025-04-08）
 
 [![AUR](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE)
 [![](https://img.shields.io/badge/Author-北京国炬软件-orange.svg)](http://jeecg.com/aboutusIndex)
 [![](https://img.shields.io/badge/Blog-官方博客-blue.svg)](https://jeecg.blog.csdn.net)
-[![](https://img.shields.io/badge/version-2.0.1-brightgreen.svg)](https://github.com/zhangdaiscott/jeecg-boot)
+[![](https://img.shields.io/badge/version-2.0.2-brightgreen.svg)](https://github.com/zhangdaiscott/jeecg-boot)
 [![GitHub stars](https://img.shields.io/github/stars/zhangdaiscott/jeecg-boot.svg?style=social&label=Stars)](https://github.com/zhangdaiscott/jeecg-boot)
 [![GitHub forks](https://img.shields.io/github/forks/zhangdaiscott/jeecg-boot.svg?style=social&label=Fork)](https://github.com/zhangdaiscott/jeecg-boot)
 
@@ -33,7 +33,7 @@ weixin4j 快速集成
     <dependency>
 		<groupId>org.jeecgframework</groupId>
 		<artifactId>weixin4j</artifactId>
-		<version>2.0.1</version>
+		<version>2.0.2</version>
 	</dependency>
 	
 

@@ -2,6 +2,7 @@ package com.jeecg.dingtalk.api.core.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson2.JSONFactory;
 import com.jeecg.dingtalk.api.core.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,25 @@ public class HttpUtil {
 	 */
 	public static <T> Response<T> post(String url, String output, Type... types) {
 		JSONObject json = httpRequest(url, "POST", output);
-		return json.toJavaObject(new TypeReference<Response<T>>(types){});
+		return toJavaObject(json, new TypeReference<Response<T>>(types){});
+	}
+
+	/**
+	 * 重写fastjson的toJavaObject方法
+	 * 解决问题： “ class com.alibaba.fastjson2.JSONObject cannot be cast to class com.alibaba.fastjson.JSONObject ”
+	 * @param json
+	 * @param typeReference
+	 * @return
+	 * @param <T>
+	 */
+	public static <T> T toJavaObject(JSONObject json, TypeReference<T> typeReference) {
+		Type type = (Type)(typeReference != null ? typeReference.getType() : Object.class);
+		if (type instanceof Class) {
+			return json.toJavaObject(typeReference);
+		} else {
+			String str = com.alibaba.fastjson.JSON.toJSONString(json);
+			return (T)com.alibaba.fastjson.JSON.parseObject(str, type);
+		}
 	}
 
 	public static JSONObject httpRequest(String request, String requestMethod, String output) {
