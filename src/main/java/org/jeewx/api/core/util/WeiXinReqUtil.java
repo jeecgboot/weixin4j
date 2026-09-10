@@ -2,10 +2,10 @@ package org.jeewx.api.core.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 import org.jeewx.api.core.handler.WeiXinReqHandler;
 import org.jeewx.api.core.req.WeiXinReqService;
 import org.jeewx.api.core.req.model.WeixinReqConfig;
@@ -70,6 +70,10 @@ public class WeiXinReqUtil {
 	public static void initReqConfig(String configName) throws JDOMException, IOException{
 		InputStream is = WeiXinReqService.class.getClassLoader().getResourceAsStream(configName);  
 		SAXBuilder xmlBuilder = new SAXBuilder();
+		//禁用DOCTYPE与外部实体，防止XXE攻击
+		xmlBuilder.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		xmlBuilder.setFeature("http://xml.org/sax/features/external-general-entities", false);
+		xmlBuilder.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 		Document doc = xmlBuilder.build(is);
 		Element objRoot = doc.getRootElement();
 		List<Element> lstMapping = objRoot.getChildren("req");

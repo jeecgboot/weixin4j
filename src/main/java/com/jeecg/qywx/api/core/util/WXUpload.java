@@ -1,7 +1,7 @@
 package com.jeecg.qywx.api.core.util;
 
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.api.internal.util.StringUtils;
+import org.jeewx.api.core.common.util.StringUtils;
 import com.jeecg.qywx.api.base.JwAccessTokenAPI;
 import com.jeecg.qywx.api.base.JwParamesAPI;
 import com.jeecg.qywx.api.core.common.AccessToken;

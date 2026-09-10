@@ -1,6 +1,6 @@
 package com.jeecg.weibo.dto;
 
-import com.alipay.api.internal.util.StringUtils;
+import org.jeewx.api.core.common.util.StringUtils;
 
 import java.net.URLEncoder;
 

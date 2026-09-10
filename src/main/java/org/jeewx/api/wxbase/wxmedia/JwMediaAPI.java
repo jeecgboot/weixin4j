@@ -3,7 +3,7 @@ package org.jeewx.api.wxbase.wxmedia;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.api.internal.util.StringUtils;
+import org.jeewx.api.core.common.util.StringUtils;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.req.WeiXinReqService;

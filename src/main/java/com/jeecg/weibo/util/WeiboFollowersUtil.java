@@ -1,6 +1,6 @@
 package com.jeecg.weibo.util;
 
-import com.alipay.api.internal.util.StringUtils;
+import org.jeewx.api.core.common.util.StringUtils;
 
 import com.jeecg.weibo.dto.WeiboFollowersDto;
 import com.jeecg.weibo.exception.BusinessException;

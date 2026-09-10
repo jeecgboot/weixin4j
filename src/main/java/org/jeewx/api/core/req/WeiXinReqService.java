@@ -1,7 +1,7 @@
 package org.jeewx.api.core.req;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jdom.JDOMException;
+import org.jdom2.JDOMException;
 import org.jeewx.api.core.annotation.ReqType;
 import org.jeewx.api.core.exception.WexinReqException;
 import org.jeewx.api.core.handler.WeiXinReqHandler;

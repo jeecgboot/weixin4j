@@ -2,9 +2,9 @@ package org.jeewx.api.wxsendmsg;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 import org.jeewx.api.core.common.HttpPostUtil;
 import org.jeewx.api.core.common.WxstoreUtils;
 import org.jeewx.api.core.exception.WexinReqException;
@@ -612,6 +612,10 @@ public class JwSendMessageAPI {
 		SAXBuilder build = new SAXBuilder();
 		Document doc = null;
 		try {
+			//禁用DOCTYPE与外部实体，防止XXE攻击
+			build.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			build.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			build.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
 			doc = build.build(new StringReader(xmlString));
 		} catch (Exception e1) {
 			e1.printStackTrace();
