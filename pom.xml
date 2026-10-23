@@ -50,7 +50,7 @@
 		<junit.version>4.12</junit.version>
 		<commons-io.version>2.21.0</commons-io.version>
 		<commons-codec.version>1.18.0</commons-codec.version>
-		<fastjson-lib.version>2.0.58</fastjson-lib.version>
+		<fastjson-lib.version>2.0.66</fastjson-lib.version>
 		<slf4j.version>2.0.18</slf4j.version>
 		<jdom2.version>2.0.6.1</jdom2.version>
 		<freemarker.version>2.3.34</freemarker.version>
